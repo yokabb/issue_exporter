@@ -1,10 +1,9 @@
 class SessionsController < ApplicationController
-  def login
+  def create
+    binding.pry
   end
 
-  def auth
-  end
+  def destroy
 
-  def logout
   end
 end
