@@ -4,5 +4,12 @@
 Find me in app/views/root/index.html.erb
 </p>
 
-<a href="/auth/github" class="btn btn-large btn-primary"> Sign in </a>
+
+<% if current_user %>
+    Welcome <%= current_user.github_id %>!
+    <%= link_to "Sign out", '/logout' %>
+ 
+<% else %>
+<a href="/auth/github">Sign in</a>
+<% end %>
 
