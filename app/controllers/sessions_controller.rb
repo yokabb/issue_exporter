@@ -1,9 +1,18 @@
 class SessionsController < ApplicationController
   def create
-    binding.pry
+    auth = request.env['omniauth.auth']
+    user = User.find_by(github_id: auth["uid"])
+    if !user
+      user = User.new(github_id: auth["uid"], access_token: auth["credentials"]["token"])
+      user.save
+    end
+    
+    session[:user_id] = user.github_id
+    redirect_to root_path
   end
 
   def destroy
 
   end
+
 end
