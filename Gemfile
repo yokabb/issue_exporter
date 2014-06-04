@@ -40,3 +40,5 @@ gem 'spring',        group: :development
 
 gem 'omniauth-github'
 
+gem 'pry', group: [:development, :test]
+
