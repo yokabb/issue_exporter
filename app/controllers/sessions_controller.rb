@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   def create
     auth = request.env['omniauth.auth']
     user = User.find_by(github_id: auth["uid"])
+    
     if !user
       user = User.new(github_id: auth["uid"], access_token: auth["credentials"]["token"])
       user.save

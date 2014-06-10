@@ -12,9 +12,9 @@ Find me in app/views/root/index.html.erb
     <div>
       <h4>Organizations</h4>
       <div>
-        <% @orgs.each do |str| %>
+        <% @orgs.each do |org| %>
           <div>
-          <%= str %>
+          <%= org %>
           </div>
         <% end %>
       </div>
@@ -23,27 +23,17 @@ Find me in app/views/root/index.html.erb
     <div>
       <h4>Repositories</h4>
       <div>
-        <% @my_repos.each do |repo| %>
+        <% @repos.each do |repo| %>
           <div>
-          <%= repo %>
+            <%= link_to "#{repo}", '/export.csv' %>
           </div>
-        <% end %>
-      </div>
-      
-      <div>
-        <% @orgs_repos.each do |org_repos| %>
-          <% org_repos.each do |repo| %>
-            <div>
-            <%= repo %>
-            </div>
-          <% end %>
         <% end %>
       </div>
     </div>
 
 <% else %>
 
-<a href="/auth/github">Sign in</a>
+<%= link_to "Sign in", '/auth/github' %>
 
 <% end %>
 
