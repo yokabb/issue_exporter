@@ -42,3 +42,4 @@ gem 'omniauth-github'
 
 gem 'pry', group: [:development, :test]
 
+gem 'github_api'
