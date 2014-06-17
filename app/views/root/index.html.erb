@@ -23,10 +23,17 @@ Find me in app/views/root/index.html.erb
     <div>
       <h4>Repositories</h4>
       <div>
-        <% @repos.each do |repo| %>
-          <div>
-            <%= link_to "#{repo}", '/export.csv' %>
-          </div>
+        <% github = Github.new :oauth_token => current_user.access_token %>
+        <% @repos.each_with_index do |repo, index| %>
+          <% if github.repos.get(:user => @users[index], :repo => repo).has_issues %>
+            <div>
+              <%= link_to "#{repo}", "/export/#{@users[index]}/#{repo}.csv" %>
+            </div>
+          <% else %>
+            <div>
+              <%= "#{repo}" %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
