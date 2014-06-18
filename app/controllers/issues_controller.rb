@@ -5,8 +5,11 @@ class IssuesController < ApplicationController
     repo = params[:repo]
 
     github = Github.new(:oauth_token => current_user.access_token, auto_pagination: true)
+# debug用
+#    github = Github.new(:oauth_token => current_user.access_token)
+#    binding.pry
     
-    issues_list_open = github.issues.list(:user => user, :repo => repo)
+    issues_list_open = github.issues.list(:user => user, :repo => repo, state:'open')
     issues_list_closed = github.issues.list(:user => user, :repo => repo, state: 'closed')
 
     #labels配列の作成(重複カテゴリは集約)
@@ -19,6 +22,13 @@ class IssuesController < ApplicationController
       end
     end
     labels_list.sort!
+    labels_list.sort!{ |a, b|
+      x = a.include?(":") ? -1 : 1
+      y = b.include?(":") ? -1 : 1
+      x = x - 1 if a.include?("type") || a.include?("pri")
+      y = y - 1 if b.include?("type") || b.include?("pri")
+      x == y ? a <=> b : x <=> y
+    }
 
     #header作成
     header = { number: "#番号", title: "タイトル", assignee: "担当者", milestone: "マイルストーン", state: "Status"}
@@ -26,7 +36,7 @@ class IssuesController < ApplicationController
       header[:"#{"Label" + index.to_s}"] = label
     end
 
-    #issuesの作成
+    #issues作成
     issues = Array.new
     2.times do |i|
       issues_list = issues_list_open
@@ -37,7 +47,12 @@ class IssuesController < ApplicationController
         labels_list.each_with_index do |label_in_list, index|
           issue.labels.each do |label_in_issue|
             if label_in_issue.name.include?(label_in_list)
-              labels[index] = label_in_issue.name
+              labels[index] = if label_in_issue.name.include?(":")
+                                colon_p = (label_in_issue.name).index(":")
+                                labels[index] = label_in_issue.name[(colon_p + 1)..-1]
+                              else
+                                label_in_issue.name
+                              end
               break
             end
           end
