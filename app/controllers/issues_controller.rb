@@ -12,6 +12,9 @@ class IssuesController < ApplicationController
     issues_list_open = github.issues.list(:user => user, :repo => repo, state:'open')
     issues_list_closed = github.issues.list(:user => user, :repo => repo, state: 'closed')
 
+    pull_requests_list_open = github.pull_requests.list(user:user, repo:repo, state:'open')
+    pull_requests_list_closed = github.pull_requests.list(user:user, repo:repo, state:'closed')
+
     #labels配列の作成(重複カテゴリは集約)
     labels_list = Array.new
     github.issues.labels.list(user: user, repo: repo).each do |label_in_repo|
@@ -43,6 +46,9 @@ class IssuesController < ApplicationController
       issues_list = issues_list_closed if i == 0 
       
       issues_list.each do |issue|
+        #pull_requestsに属するもの排除
+        next if (pull_requests_list_open.find{|pr| pr.number == issue.number} || pull_requests_list_closed.find{|pr| pr.number == issue.number})
+
         labels = Array.new(labels_list.size, none)
         labels_list.each_with_index do |label_in_list, index|
           issue.labels.each do |label_in_issue|
