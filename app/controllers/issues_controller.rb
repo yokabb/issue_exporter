@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
     none = "-"
     user = params[:user]
     repo = params[:repo]
-    github = Github.new :oauth_token => current_user.access_token
+    github = Github.new(:oauth_token => current_user.access_token, auto_pagination: true)
 
     issues_list_open = github.issues.list(:user => user, :repo => repo)
     issues_list_closed = github.issues.list(:user => user, :repo => repo, state: 'closed')
