@@ -12,7 +12,7 @@ class RootController < ApplicationController
       @users = Array.new
       user_repos_list.each do |repo|
         @repos << repo.name
-        @users << github.repos.list.first.owner.login
+        @users << github.users.get(id: current_user.github_id).login
       end
       @orgs.each do |org|
         org_repos_list = github.repos.list org:org
