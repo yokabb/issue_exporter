@@ -25,11 +25,11 @@
         <% @repos.each_with_index do |repo, index| %>
           <% if github.repos.get(:user => @users[index], :repo => repo).has_issues %>
             <tr><td>
-              <h4><%= link_to "#{repo}", "/export/#{@users[index]}/#{repo}.csv" %></h4>
+              <h4><%= link_to "#{@users[index]}/#{repo}", "/export/#{@users[index]}/#{repo}.csv" %></h4>
             </td></tr>
           <% else %>
             <tr><td>
-              <h4><%= "#{repo}" %></h4>
+              <h4><%= "#{@users[index]}/#{repo}" %></h4>
             </td></tr>
           <% end %>
         <% end %>
@@ -42,7 +42,7 @@
   <div class="hero-unit">
     <h1 class="center"> Issue Exporter </h1><br>
     <h5>This application export issue list of your repository in CSV file </h5>
-    <%= link_to "Sign up now!", '/auth/github', class: "btn btn-large" %>
+    <%= link_to "Sign in!", '/auth/github', class: "btn btn-large" %>
   </div>
 
 <% end %>
