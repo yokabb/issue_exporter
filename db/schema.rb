@@ -13,11 +13,11 @@
 
 ActiveRecord::Schema.define(version: 20140604054730) do
 
-  create_table "users", force: true do |t|
-    t.integer  "github_id"
-    t.string   "access_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table 'users', force: true do |t|
+    t.integer  'github_id'
+    t.string   'access_token'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
   end
 
 end
