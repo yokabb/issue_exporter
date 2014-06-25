@@ -1,48 +1,5 @@
-<% if current_user %>
-
-  <% github = Github.new :oauth_token => current_user.access_token %>
-  <h2>Welcome <span class="user"><%= github.users.get(id: current_user.github_id).login %></span> !</h2>
-  <div>
-    <table class="table table-striped table-condensed">
-      <thead>
-        <tr><th><h3>Organizations</h3></th></tr>
-      <thead>
-      <tbody>
-        <% @orgs.each do |org| %>
-          <tr><td>
-            <h4><%= org %></h4>
-          </td></tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div>
-    <table class="table table-striped table-condensed">
-      <thead>
-        <tr><th><h3>Repositories</h3></th><tr>
-      </thead>
-      <tbody>
-        <% @repos.each_with_index do |repo, index| %>
-          <% if github.repos.get(:user => @users[index], :repo => repo).has_issues %>
-            <tr><td>
-              <h4><%= link_to "#{@users[index]}/#{repo}", "/export/#{@users[index]}/#{repo}.csv" %></h4>
-            </td></tr>
-          <% else %>
-            <tr><td>
-              <h4><%= "#{@users[index]}/#{repo}" %></h4>
-            </td></tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-<% else %>
-
-  <div class="hero-unit">
-    <h1 class="center"> Issue Exporter </h1><br>
-    <h5>This application export issue list of your repository in CSV file </h5>
-    <%= link_to "Sign in!", '/auth/github', class: "btn btn-large" %>
-  </div>
-
-<% end %>
+<div class="hero-unit">
+  <h1 class="center"> Issue Exporter </h1><br>
+  <h5>This application export issue list of your repository in CSV file </h5>
+  <%= link_to "Sign in!", '/auth/github', class: "btn btn-large" %>
+</div>

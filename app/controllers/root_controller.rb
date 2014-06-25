@@ -1,7 +1,8 @@
 class RootController < ApplicationController
   def index
-    return unless logged_in
+  end
 
+  def userpage
     github = Github.new(oauth_token: current_user.access_token)
     user_orgs_list  = github.orgs.list
     user_repos_list = github.repos.list
