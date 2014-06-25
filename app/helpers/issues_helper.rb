@@ -32,22 +32,21 @@ module IssuesHelper
            milestone: (issue_fg.milestone ? issue_fg.milestone.title : none),
                state: issue_fg.state,
             }
-      labels = Array.new(labels_in_header.size, none)
+      for index in 0...labels_in_header.size do
+        tmp[:"#{"label" + index.to_s}"] = none
+      end
       labels_in_header.each_with_index do |label_in_header, index|
         issue_fg.labels.each do |label_in_issue_fg|
           if label_in_issue_fg.name.include?(label_in_header)
-            labels[index] = if label_in_issue_fg.name.include?(":")
-                              colon_p = (label_in_issue_fg.name).index(":")
-                              label_in_issue_fg.name[(colon_p + 1)..-1]
-                            else
-                              label_in_issue_fg.name
-                            end
+            tmp[:"#{"label" + index.to_s}"] = if label_in_issue_fg.name.include?(":")
+                                                colon_p = (label_in_issue_fg.name).index(":")
+                                                label_in_issue_fg.name[(colon_p + 1)..-1]
+                                              else
+                                                label_in_issue_fg.name
+                                              end
             break
           end
         end
-      end
-      labels_in_header.each_with_index do |la, index|
-        tmp[:"#{"Label" + index.to_s}"] = labels[index]
       end
       issues_list_in_csv << tmp
     end
