@@ -1,70 +1,75 @@
 module IssuesHelper
-  #header•”•ª‚ÉŠY“–‚·‚élabels_list‚ğƒJƒeƒSƒŠ¶‘¤‚É—Dæ‚Ì‡‚Åì¬iƒJƒeƒSƒŠd•¡‚È‚µj
+  # labels_in_headerã‚’ã‚«ãƒ†ã‚´ãƒªå„ªå…ˆã®é †ã§ä½œæˆã€‚ãŸã ã—ã€ã‚«ãƒ†ã‚´ãƒªé‡è¤‡ãªã—
   def make_labels_in_header(labels_list)
-    labels_in_header = Array.new
+    labels_in_header = []
     labels_list.each do |label_in_repo|
-      colon_p = (label_in_repo.name + ":").index(":")
+      colon_p = (label_in_repo.name + ':').index(':')
       label_name = label_in_repo.name[0..colon_p]
-      if labels_in_header.find{ |label_in_array| label_in_array == label_name } == nil
-        labels_in_header << label_name
-      end
+      already_in_list = labels_in_header.detect { |label_in_array| label_in_array == label_name }
+      next if already_in_list
+      labels_in_header << label_name
     end
-    labels_in_header.sort!{ |a, b|
-      x = a.include?(":") ? -1 : 1
-      y = b.include?(":") ? -1 : 1
-      x = x - 1 if a.include?("type") || a.include?("pri")
-      y = y - 1 if b.include?("type") || b.include?("pri")
+    labels_in_header.sort! do |a, b|
+      x = a.include?(':') ? -1 : 1
+      y = b.include?(':') ? -1 : 1
+      x -= 1 if a.include?('type') || a.include?('pri')
+      y -= 1 if b.include?('type') || b.include?('pri')
       x == y ? a <=> b : x <=> y
-    }
+    end
     return labels_in_header
   end
 
-  #issues_list_from_github“à‚Åpull_requests_list_from_github‚É‘®‚³‚È‚¢issue‚Å
-  #issue_list_in_csv‚ğì¬B‚½‚¾‚µAlabel‚ÌƒJƒeƒSƒŠd•¡‚È‚µ
+  # issues_list_from_githubå†…ã§pull_requests_list_from_githubã«å±ã•ãªã„issueã§
+  # issue_list_in_csvã‚’ä½œæˆã€‚ãŸã ã—ã€labelã®ã‚«ãƒ†ã‚´ãƒªé‡è¤‡ãªã—
   def make_issues_list_in_csv(issues_list_from_github, pull_requests_list_from_github, labels_in_header)
-    none = "-"
-    issues_list_in_csv = Array.new
+    none = '-'
+    issues_list_in_csv = []
     issues_list_from_github.each do |issue_fg|
-      next if (pull_requests_list_from_github.size != 0 && pull_requests_list_from_github.find{|pr| pr.number == issue_fg.number})
-      tmp = { number: issue_fg.number,
-               title: issue_fg.title,
-            assignee: (issue_fg.assignee ? issue_fg.assignee.login : none),
-           milestone: (issue_fg.milestone ? issue_fg.milestone.title : none),
-               state: issue_fg.state,
+      is_pull_request = pull_requests_list_from_github.size != 0 && pull_requests_list_from_github.detect { |pr| pr.number == issue_fg.number }
+      next if is_pull_request
+      tmp = { number:    issue_fg.number,
+              title:     issue_fg.title,
+              assignee:  (issue_fg.assignee ? issue_fg.assignee.login : none),
+              milestone: (issue_fg.milestone ? issue_fg.milestone.title : none),
+              state:     issue_fg.state,
             }
-      for index in 0...labels_in_header.size do
-        tmp[:"#{"label" + index.to_s}"] = none
-      end
-      labels_in_header.each_with_index do |label_in_header, index|
-        issue_fg.labels.each do |label_in_issue_fg|
-          if label_in_issue_fg.name.include?(label_in_header)
-            tmp[:"#{"label" + index.to_s}"] = if label_in_issue_fg.name.include?(":")
-                                                colon_p = (label_in_issue_fg.name).index(":")
-                                                label_in_issue_fg.name[(colon_p + 1)..-1]
-                                              else
-                                                label_in_issue_fg.name
-                                              end
-            break
-          end
-        end
-      end
+      make_labels_in_issue(tmp, issue_fg, labels_in_header, none)
       issues_list_in_csv << tmp
     end
     return issues_list_in_csv
   end
 
-  #header, issues‚©‚çcsvì¬
+  # issueã®labeléƒ¨åˆ†ã‚’ä½œæˆ
+  # help make_issues_list_in_csv
+  def make_labels_in_issue(issue, issue_fg, labels_in_header, none)
+    labels_in_header.each_with_index do |label_in_header, index|
+      issue[:"#{'label' + index.to_s}"] = none
+      issue_fg.labels.each do |label_in_issue_fg|
+        next unless label_in_issue_fg.name.include?(label_in_header)
+        issue[:"#{'label' + index.to_s}"] = if label_in_issue_fg.name.include?(':')
+                                              colon_p = (label_in_issue_fg.name).index(':')
+                                              label_in_issue_fg.name[(colon_p + 1)..-1]
+                                            else
+                                              label_in_issue_fg.name
+                                            end
+        break
+      end
+    end
+    return issue
+  end
+
+  # header, issuesã‹ã‚‰csvä½œæˆ
   def make_csv(header, issues)
-    csv = ""
-    header.each_with_index do |(key, value), index|
+    csv = ''
+    header.each_with_index do |(_key, value), index|
       csv += value
       csv += ',' unless index == header.size - 1
     end
     csv += "\n"
     issues.each do |issue|
-      issue.each_with_index do |(key, value), index|
+      issue.each_with_index do |(_key, value), index|
         str = value.to_s
-        str.each_char{ |ch| if ch == '"' then ch = '"' + '"'; end }
+        str.each_char { |ch| ch = '""' if ch == '"' }
         csv += '"' + str + '"'
         csv += ',' unless index == issue.size - 1
       end

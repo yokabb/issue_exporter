@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  get '/export/:user/:repo.:format', to: 'issues#export'
-  get '/auth/:provider/callback', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
+  get '/export/:user/:repo.:format'   , to: 'issues#export'
+  get '/auth/:provider/callback'      , to: 'sessions#create'
+  get '/logout'                       , to: 'sessions#destroy'
+  get '/userpage'                     , to: 'root#userpage'
   root 'root#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

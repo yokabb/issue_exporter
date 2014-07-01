@@ -1,0 +1,120 @@
+llCops:
+  RunRailsCops: true
+  Exclude:
+    # rails が生成するファイルは対象外とする
+    - 'db/schema.rb'
+    - 'vendor/**/*'
+
+Lint/HandleExceptions:
+  Exclude:
+    # LoadError を rescue したいので例外ファイルに追加
+    - 'config/application.rb'
+
+Lint/UnderscorePrefixedVariableName:
+  # underscore を先頭に付けないとすると末尾に付けることになるが、
+  # 実際にやってみると変数名がある程度長い場合とてもわかりづらい。保留。
+  Enabled: false
+
+Rails/Output:
+  Exclude:
+    # 実行ファイルは `puts` などを使うこともある
+    - 'bin/*'
+    # 以下、例外を個別に登録
+    - 'db/migrate/20130419080241_remove_t_project_work_sheet_hours_and_t_project_work_sheet_preferences_and_t_project_work_sheet_appointments.rb'
+    - 'lib/winworks_one/erd.rb'
+    - 'lib/winworks_one/sprockets/css_to_scss.rb'
+
+Style/AlignHash:
+  # 書きやすさよりも読みやすさを優先する
+  EnforcedHashRocketStyle: table # default: key
+  EnforcedColonStyle:      table # default: key
+
+# 結合度の低い `&&`, `||` として `and`, `or` を使う場合はOK
+# その場合、検知されるが無視して良い
+#Style/AndOr:
+#  Enabled: true
+
+Style/AsciiComments:
+  # コメントに日本語を利用したいので無効
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  # style に compact と nested があるが適切な方を選べば良いと思う
+  Enabled: false
+
+Style/CollectionMethods:
+  PreferredMethods:
+    # AR::Base.find と区別しやすくするため
+    find:     'detect' # default: detect: 'find'
+    # default
+    collect:  'map'
+    collect!: 'map!'
+    inject:   'reduce'
+    find_all: 'select'
+  Exclude:
+    # rubocop 0.23.0 では Pathname#find を誤検知するので
+    # それを利用しているファイルは対象外とする
+    - 'lib/winworks_one/precompile_filter.rb'
+
+Style/EmptyLines:
+  # 2行空けて区切る。がすでに多くのファイルで使われてしまっているので無効
+  Enabled: false
+
+Style/FileName:
+  Exclude:
+    # 実行ファイル名は "-" を使っても良い
+    - 'bin/*'
+
+Style/Lambda:
+  # block が scope の引数になってしまうので。
+  #
+  #     scope :active, lambda do
+  #
+  # とは書けない。
+  #
+  #   1. `lambda` を `->` にする
+  #   2. `do` を `{` にする
+  #   3. `scope :` を `scope(:` とする
+  #
+  # が対応策だが 1 で対応する。
+  Enabled: false
+
+Style/MultilineBlockChain:
+  # 代替案がないので採用しない
+  Enabled: false
+
+Style/NumericLiterals:
+  # 必ずしもすべてのケースで3桁区切りにすべきとは言えない
+  Enabled: false
+
+Style/ParameterLists:
+  # options hash でのキーの数は無制限なんだから、
+  # キーワード引数の数も別に良い気がする
+  CountKeywordArgs: false
+
+# ActiveRecord::RecordInvalid のように、
+# 引数が message でないケースを検知するが無視してよい
+#Style/RaiseArgs:
+#  Enabled: true
+
+Style/RegexpLiteral:
+  # "/" が1つだけでも、%r{} を使うべき。エスケープするよりマシ。
+  MaxSlashes: 0
+
+Style/SingleSpaceBeforeFirstArg:
+  # first arg を他の行と揃えたいケースがあるので OFF
+  Enabled: false
+
+Style/TrailingBlankLines:
+  Exclude:
+    # rails が生成する初期ファイルで修正しないファイルは対象外とする
+    - 'config/initializers/cookies_serializer.rb'
+
+Style/TrailingComma:
+  # comma style で利用したいが RuboCop 0.23.0 では
+  # %w でも comma を付けろと言われてしまうので OFF
+  # EnforcedStyleForMultiline: comma # default: no_comma
+  Enabled: false
+
+RedundantReturn:
+ Enabled: false
