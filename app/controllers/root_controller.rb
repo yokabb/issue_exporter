@@ -1,15 +1,21 @@
 class RootController < ApplicationController
+  # ログイン画面（ユーザーはサインインしていない場合）
+  # ユーザー画面（ユーザーはサインイン済の場合）
   def index
-  end
+    return unless logged_in?
 
-  def userpage
+    # ユーザーの所属組織のリストとユーザーのレポジトリのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token)
     user_orgs_list  = github.orgs.list
     user_repos_list = github.repos.list
 
+    # 組織のリストから組織の名前のみを取り出す
     @orgs = []
     user_orgs_list.each { |org| @orgs << org.login }
 
+    # ユーザーが参照可能なすべてのレポジトリの名前と、
+    # 各レポジトリの所有者（ユーザーまたは組織）の名前を保持する
+    # (@repos[i]の所有者は@users[i])
     @repos = []
     @users = []
     user_repos_list.each do |repo|
@@ -23,5 +29,7 @@ class RootController < ApplicationController
         @users << org
       end
     end
+
+    render 'userpage'
   end
 end

@@ -1,5 +1,7 @@
 module IssuesHelper
-  # labels_in_headerをカテゴリ優先の順で作成。ただし、カテゴリ重複なし
+  # ヘッダーのlabel部分の表示に対する前処理を行う
+  # labelのカテゴリ内の重複をなくし(pri: high, pri: low は pri:に統一)、
+  # ユーザーにとって重要なlabelを左側に表示するためにソートする
   def make_labels_in_header(labels_list)
     labels_in_header = []
     labels_list.each do |label_in_repo|
@@ -19,8 +21,7 @@ module IssuesHelper
     return labels_in_header
   end
 
-  # issues_list_from_github内でpull_requests_list_from_githubに属さないissueで
-  # issue_list_in_csvを作成。ただし、labelのカテゴリ重複なし
+  # issueリストの情報を作成する。ただし、issueでpull requestでないもののみ
   def make_issues_list_in_csv(issues_list_from_github, pull_requests_list_from_github, labels_in_header)
     none = '-'
     issues_list_in_csv = []
@@ -39,8 +40,8 @@ module IssuesHelper
     return issues_list_in_csv
   end
 
-  # issueのlabel部分を作成
-  # help make_issues_list_in_csv
+  # issueのlabel部分を作成する
+  # ↑のmake_issues_list_in_csv メソッドのヘルパー
   def make_labels_in_issue(issue, issue_fg, labels_in_header, none)
     labels_in_header.each_with_index do |label_in_header, index|
       issue[:"#{'label' + index.to_s}"] = none
@@ -58,7 +59,7 @@ module IssuesHelper
     return issue
   end
 
-  # header, issuesからcsv作成
+  # ヘッダーとissueリストをCSV形式にする
   def make_csv(header, issues)
     csv = ''
     header.each_with_index do |(_key, value), index|

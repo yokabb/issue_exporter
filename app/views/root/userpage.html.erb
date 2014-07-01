@@ -6,6 +6,7 @@
       <tr><th><h3>Organizations</h3></th></tr>
     <thead>
     <tbody>
+      <% # ユーザーの所属組織のリストを表示 %>
       <% @orgs.each do |org| %>
         <tr><td>
           <h4><%= org %></h4>
@@ -20,6 +21,8 @@
       <tr><th><h3>Repositories</h3></th><tr>
     </thead>
     <tbody>
+      <% # ユーザーのレポジトリのリストを表示 %>
+      <% # issueを持つもののみリンクを貼る %>
       <% @repos.each_with_index do |repo, index| %>
         <% if github.repos.get(:user => @users[index], :repo => repo).has_issues %>
           <tr><td>
