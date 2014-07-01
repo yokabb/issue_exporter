@@ -1,10 +1,9 @@
 class RootController < ApplicationController
-  # ログイン画面（ユーザーはサインインしていない場合に呼ばれる）
+  # ログイン画面（ユーザーはサインインしていない場合）
+  # ユーザー画面（ユーザーはサインイン済の場合）
   def index
-  end
+    return unless logged_in?
 
-  # ユーザー画面（ユーザーはサインイン済の場合に呼ばれる）
-  def userpage
     # ユーザーの所属組織のリストとユーザーのレポジトリのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token)
     user_orgs_list  = github.orgs.list
@@ -30,5 +29,7 @@ class RootController < ApplicationController
         @users << org
       end
     end
+
+    render 'userpage'
   end
 end

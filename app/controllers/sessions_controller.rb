@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     end
 
     session[:user_id] = user.id
-    redirect_to '/userpage'
+    redirect_to root_path
   end
 
   # ユーザーをサインアウトさせ、サインイン画面に戻す
