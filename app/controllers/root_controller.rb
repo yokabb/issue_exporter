@@ -15,12 +15,20 @@ class RootController < ApplicationController
 
     # ユーザーが参照可能なすべてのレポジトリの名前と、
     # 各レポジトリの所有者（ユーザーまたは組織）の名前を保持する
+    # ユーザーがownerのレポジトリ、ユーザーがcollaboratorのレポジトリ、
+    # ユーザーのorgnizationのレポジトリの順
     # (@repos[i]の所有者は@users[i])
     @repos = []
     @users = []
     user_repos_list.each do |repo|
+      next if repo.owner.login != github.users.get(id: current_user.github_id).login
       @repos << repo.name
-      @users << github.users.get(id: current_user.github_id).login
+      @users << repo.owner.login
+    end
+    user_repos_list.each do |repo|
+      next unless repo.owner.login != github.users.get(id: current_user.github_id).login
+      @repos << repo.name
+      @users << repo.owner.login
     end
     @orgs.each do |org|
       org_repos_list = github.repos.list(org: org)
