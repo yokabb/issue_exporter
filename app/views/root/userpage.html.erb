@@ -1,5 +1,4 @@
-<% github = Github.new :oauth_token => current_user.access_token %>
-<h2>Welcome <span class="user"><%= github.users.get(id: current_user.github_id).login %></span> !</h2>
+<h2>Welcome <span class="user"><%= @username %></span> !</h2>
 <div>
   <table class="table table-striped table-condensed">
     <thead>
@@ -23,14 +22,14 @@
     <tbody>
       <% # ユーザーのレポジトリのリストを表示 %>
       <% # issueを持つもののみリンクを貼る %>
-      <% @repos.each_with_index do |repo, index| %>
-        <% if github.repos.get(:user => @users[index], :repo => repo).has_issues %>
+      <% @repos.each do |repo| %>
+        <% if repo.has_issue %>
           <tr><td>
-            <h4><%= link_to "#{@users[index]}/#{repo}", "/export/#{@users[index]}/#{repo}.csv" %></h4>
+            <h4><%= link_to "#{repo.owner}/#{repo.name}", "/export/#{repo.owner}/#{repo.name}.csv" %></h4>
           </td></tr>
         <% else %>
           <tr><td>
-            <h4><%= "#{@users[index]}/#{repo}" %></h4>
+            <h4><%= "#{repo.owner}/#{repo.name}" %></h4>
           </td></tr>
         <% end %>
       <% end %>
