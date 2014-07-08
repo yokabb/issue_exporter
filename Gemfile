@@ -55,3 +55,4 @@ end
 
 gem 'bootstrap-sass', '2.3.2.0'
 
+gem 'rspec',  '~> 3.0.0'
