@@ -6,35 +6,37 @@ class RootController < ApplicationController
 
     # ユーザーの所属組織のリストとユーザーのレポジトリのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token)
+    @username = github.users.get(id: current_user.github_id).login
+    @orgs = []
+    @repos = []
     user_orgs_list  = github.orgs.list
     user_repos_list = github.repos.list
 
     # 組織のリストから組織の名前のみを取り出す
-    @orgs = []
     user_orgs_list.each { |org| @orgs << org.login }
 
     # ユーザーが参照可能なすべてのレポジトリの名前と、
     # 各レポジトリの所有者（ユーザーまたは組織）の名前を保持する
-    # ユーザーがownerのレポジトリ、ユーザーがcollaboratorのレポジトリ、
-    # ユーザーのorgnizationのレポジトリの順
-    # (@repos[i]の所有者は@users[i])
-    @repos = []
-    @users = []
+    # レポジトリの順は、
+    # ユーザーがownerのもの、ユーザーがcollaboratorのもの、ユーザーのorgnizationのもの
     user_repos_list.each do |repo|
-      next if repo.owner.login != github.users.get(id: current_user.github_id).login
-      @repos << repo.name
-      @users << repo.owner.login
+      next if repo.owner.login != @username
+      name = repo.name
+      owner = repo.owner.login
+      @repos << Repository.new(name, owner)
     end
     user_repos_list.each do |repo|
-      next unless repo.owner.login != github.users.get(id: current_user.github_id).login
-      @repos << repo.name
-      @users << repo.owner.login
+      next unless repo.owner.login != @username
+      name = repo.name
+      owner = repo.owner.login
+      @repos << Repository.new(name, owner)
     end
     @orgs.each do |org|
       org_repos_list = github.repos.list(org: org)
       org_repos_list.each do |repo|
-        @repos << repo.name
-        @users << org
+        name = repo.name
+        owner = org
+        @repos << Repository.new(name, owner)
       end
     end
 
