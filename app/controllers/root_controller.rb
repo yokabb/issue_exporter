@@ -1,4 +1,6 @@
 class RootController < ApplicationController
+  helper_method :add_repo
+
   # ログイン画面（ユーザーはサインインしていない場合）
   # ユーザー画面（ユーザーはサインイン済の場合）
   def index
@@ -20,26 +22,28 @@ class RootController < ApplicationController
     # レポジトリの順は、
     # ユーザーがownerのもの、ユーザーがcollaboratorのもの、ユーザーのorgnizationのもの
     user_repos_list.each do |repo|
-      next if repo.owner.login != @username
-      name = repo.name
-      owner = repo.owner.login
-      @repos << Repository.new(name, owner)
+      next unless repo.owner.login == @username
+      add_repo(repo)
     end
     user_repos_list.each do |repo|
-      next unless repo.owner.login != @username
-      name = repo.name
-      owner = repo.owner.login
-      @repos << Repository.new(name, owner)
+      next if repo.owner.login == @username
+      add_repo(repo)
     end
     @orgs.each do |org|
       org_repos_list = github.repos.list(org: org)
       org_repos_list.each do |repo|
-        name = repo.name
-        owner = org
-        @repos << Repository.new(name, owner)
+        add_repo(repo)
       end
     end
 
     render 'userpage'
+  end
+
+  private
+  def add_repo(repo)
+    name = repo.name
+    owner = repo.owner.login
+    has_issue = repo.has_issues
+    @repos << Repository.new(name, owner, has_issue)
   end
 end

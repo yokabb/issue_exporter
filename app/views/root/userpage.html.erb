@@ -22,9 +22,8 @@
     <tbody>
       <% # ユーザーのレポジトリのリストを表示 %>
       <% # issueを持つもののみリンクを貼る %>
-      <% github = Github.new(oauth_token: current_user.access_token) %>
       <% @repos.each do |repo| %>
-        <% if github.repos.get(user: repo.owner, repo: repo.name).has_issues %>
+        <% if repo.has_issue %>
           <tr><td>
             <h4><%= link_to "#{repo.owner}/#{repo.name}", "/export/#{repo.owner}/#{repo.name}.csv" %></h4>
           </td></tr>
