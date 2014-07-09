@@ -28,16 +28,23 @@ module IssuesHelper
     issues_list_from_github.each do |issue_fg|
       is_pull_request = pull_requests_list_from_github.size != 0 && pull_requests_list_from_github.detect { |pr| pr.number == issue_fg.number }
       next if is_pull_request
-      tmp = { number:    issue_fg.number,
-              title:     issue_fg.title,
-              assignee:  (issue_fg.assignee ? issue_fg.assignee.login : none),
-              milestone: (issue_fg.milestone ? issue_fg.milestone.title : none),
-              state:     issue_fg.state,
+      tmp = { number:     issue_fg.number,
+              title:      issue_fg.title,
+              created_at: date_formalization(issue_fg.created_at),
+              assignee:   (issue_fg.assignee ? issue_fg.assignee.login : none),
+              milestone:  (issue_fg.milestone ? issue_fg.milestone.title : none),
+              state:      issue_fg.state,
             }
       make_labels_in_issue(tmp, issue_fg, labels_in_header, none)
       issues_list_in_csv << tmp
     end
     return issues_list_in_csv
+  end
+
+  # 時刻のyyyy/mm/dd形式化
+  # ↑のmake_issues_list_in_csv メソッドのヘルパー
+  def date_formalization(date)
+    return date[0..3] + '/' + date[5..6] + '/' + date[8..9]
   end
 
   # issueのlabel部分を作成する
