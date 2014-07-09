@@ -19,7 +19,7 @@ class IssuesController < ApplicationController
     labels_in_header = make_labels_in_header(labels_list)
 
     # ヘッダーを作成する
-    header = { number:    '#番号',
+    header = { number:    'issue#',
                title:     'タイトル',
                assignee:  '担当者',
                milestone: 'マイルストーン',
