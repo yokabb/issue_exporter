@@ -41,10 +41,13 @@ module IssuesHelper
     return issues_list_in_csv
   end
 
-  # 時刻のyyyy/mm/dd形式化
+  # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化
   # ↑のmake_issues_list_in_csv メソッドのヘルパー
-  def date_formalization(date)
-    return date[0..3] + '/' + date[5..6] + '/' + date[8..9]
+  def date_formalization(date_utc)
+    require 'time'
+    date_jst = Time.parse(date_utc).getlocal('+09:00')
+    ymd = date_jst.strftime('%Y/%m/%d')
+    return ymd
   end
 
   # issueのlabel部分を作成する
