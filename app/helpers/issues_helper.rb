@@ -72,12 +72,12 @@ module IssuesHelper
   # CSVの1行を作成する
   # ↑のmake_csvメソッドのヘルパー
   def add_csv_oneline(csv, line_data)
-    line_data.each_with_index do |(_key, value), index|
+    line_data.each_value.with_index do |value, index|
       str = value.to_s
       str.gsub!('"', '""')
       csv << '"' + str + '"'
       csv << ',' unless index == line_data.size - 1
     end
-    csv << 'CRLF'
+    csv << "\r\n"
   end
 end
