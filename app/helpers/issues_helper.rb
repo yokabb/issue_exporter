@@ -31,6 +31,7 @@ module IssuesHelper
       tmp = { number:     issue_fg.number,
               title:      issue_fg.title,
               created_at: date_formalization(issue_fg.created_at),
+              url:        issue_fg.html_url,
               assignee:   (issue_fg.assignee ? issue_fg.assignee.login : none),
               milestone:  (issue_fg.milestone ? issue_fg.milestone.title : none),
               state:      issue_fg.state,
