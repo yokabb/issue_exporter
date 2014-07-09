@@ -22,6 +22,7 @@ class IssuesController < ApplicationController
     header = { number:     'issue#',
                title:      'タイトル',
                created_at: '登録日',
+               url:        'URL',
                assignee:   '担当者',
                milestone:  'マイルストーン',
                state:      'Status'
