@@ -7,7 +7,7 @@ describe IssuesHelper do
   include IssuesHelper
 
   describe 'add_csv_oneline' do
-    it "a: 'aa', b: 'bb' を渡すと aa,bb\r\n が返ってくること" do
+    it %q(a: 'aa', b: 'bb' を渡すと aa,bb\r\n が返ってくること) do
       expect(add_csv_oneline('', a: 'aa', b: 'bb')).to eq(%("aa","bb"\r\n))
     end
   end
