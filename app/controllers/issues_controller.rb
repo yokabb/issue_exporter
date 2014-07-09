@@ -19,11 +19,12 @@ class IssuesController < ApplicationController
     labels_in_header = make_labels_in_header(labels_list)
 
     # ヘッダーを作成する
-    header = { number:    '#番号',
-               title:     'タイトル',
-               assignee:  '担当者',
-               milestone: 'マイルストーン',
-               state:     'Status'
+    header = { number:     'issue#',
+               title:      'タイトル',
+               created_at: '登録日',
+               assignee:   '担当者',
+               milestone:  'マイルストーン',
+               state:      'Status'
              }
     labels_in_header.each_with_index do |label, index|
       header[:"#{'label' + index.to_s}"] = label
