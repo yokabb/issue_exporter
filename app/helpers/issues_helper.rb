@@ -79,23 +79,16 @@ module IssuesHelper
 
   # ヘッダーとissueリストをCSV形式にする
   def make_csv(header, issues)
-    csv = ''
-    add_csv_oneline(csv, header)
-    issues.each do |issue|
-      add_csv_oneline(csv, issue)
+    require 'csv'
+    option = { row_sep:       "\r\n",
+               headers:       header.map { |_key, value| value },
+               write_headers: true
+             }
+    csv_data = CSV.generate("", option) do |csv|
+      issues.each do |line|
+        csv << line.map { |_key, value| value }
+      end
     end
-    return csv
-  end
-
-  # CSVの1行を作成する
-  # ↑のmake_csvメソッドのヘルパー
-  def add_csv_oneline(csv, line_data)
-    line_data.each_value.with_index do |value, index|
-      str = value.to_s
-      str.gsub!('"', '""')
-      csv << '"' + str + '"'
-      csv << ',' unless index == line_data.size - 1
-    end
-    csv << "\r\n"
+    return csv_data
   end
 end
