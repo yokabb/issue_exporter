@@ -6,6 +6,19 @@ require 'issues_helper'
 describe IssuesHelper do
   include IssuesHelper
 
+  # is_pull_request
+  describe 'pull_request?' do
+    it "{ number: '1' }, {} を渡すと'false'が返ってくること" do
+      expect(pull_request?({ user: 'a', number: '1' }, {})).to eq(false)
+    end
+    it "{ number: '1' }, [{ user: 'a', number: '1' }, {}] を渡すと'true'が返ってくること" do
+      expect(pull_request?({ number: '1' }, [{ user: 'a', number: '1' }, {}])).to eq(true)
+    end
+    it "{ number: '1' }, [{ user: 'a', number: '2' }, {}] を渡すと'false'が返ってくること" do
+      expect(pull_request?({ number: '1' }, [{ user: 'a', number: '2' }, {}])).to eq(false)
+    end
+  end
+
   # date_formalization
   describe 'date_formalization' do
     it "'2014-07-09T12:34:56Z' を渡すと'2014-07-09T12:34:56Z'が返ってくること" do

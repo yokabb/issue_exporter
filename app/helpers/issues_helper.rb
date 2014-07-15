@@ -26,8 +26,7 @@ module IssuesHelper
     none = '-'
     issues_list_in_csv = []
     issues_list_from_github.each do |issue_fg|
-      is_pull_request = pull_requests_list_from_github.size != 0 && pull_requests_list_from_github.detect { |pr| pr.number == issue_fg.number }
-      next if is_pull_request
+      next if pull_request?(issue_fg, pull_requests_list_from_github)
       tmp = { number:     issue_fg.number,
               title:      issue_fg.title,
               created_at: date_formalization(issue_fg.created_at),
@@ -40,6 +39,14 @@ module IssuesHelper
       issues_list_in_csv << tmp
     end
     return issues_list_in_csv
+  end
+
+  # issueがpull requestか判断する
+  # ↑のmake_issues_list_in_csv メソッドのヘルパー
+  def pull_request?(issue, pull_requests_list)
+    return false if pull_requests_list.size == 0
+    return true if pull_requests_list.detect { |pr| pr[:number] == issue[:number] }
+    return false
   end
 
   # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化

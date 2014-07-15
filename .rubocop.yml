@@ -118,3 +118,6 @@ Style/TrailingComma:
 
 RedundantReturn:
  Enabled: false
+
+Style/LineLength:
+  Max: 110
