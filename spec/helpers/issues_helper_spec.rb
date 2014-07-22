@@ -21,8 +21,8 @@ describe IssuesHelper do
 
   # date_formalization
   describe 'date_formalization' do
-    it "'2014-07-09T12:34:56Z' を渡すと'2014-07-09T12:34:56Z'が返ってくること" do
-      expect(date_formalization('2014-07-09')).to eq('2014/07/09')
+    it "'2014-07-09T12:34:56Z' を渡すと'2014/07/09'が返ってくること" do
+      expect(date_formalization('2014-07-09T12:34:56Z')).to eq('2014/07/09')
     end
     it "'0000-01-01T14:59:59Z' を渡すと'0001/01/01'が返ってくること" do
       expect(date_formalization('0000-01-01T14:59:59Z')).to eq('0000/01/01')
