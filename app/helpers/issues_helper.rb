@@ -1,4 +1,6 @@
 module IssuesHelper
+  require 'csv'
+
   # ヘッダーのlabel部分の表示に対する前処理を行う
   # labelのカテゴリ内の重複をなくし(pri: high, pri: low は pri:に統一)、
   # ユーザーにとって重要なlabelを左側に表示するためにソートする
@@ -79,15 +81,12 @@ module IssuesHelper
 
   # ヘッダーとissueリストをCSV形式にする
   def make_csv(header, issues)
-    require 'csv'
     option = { row_sep:       "\r\n",
-               headers:       header.map { |_key, value| value },
+               headers:       header.values,
                write_headers: true
              }
-    csv_data = CSV.generate("", option) do |csv|
-      issues.each do |line|
-        csv << line.map { |_key, value| value }
-      end
+    csv_data = CSV.generate('', option) do |csv|
+      issues.each { |line| csv << line.values }
     end
     return csv_data
   end
