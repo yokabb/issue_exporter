@@ -1,3 +1,6 @@
+require 'time'
+require 'csv'
+
 module IssuesHelper
   # ヘッダーのlabel部分の表示に対する前処理を行う
   # labelのカテゴリ内の重複をなくし(pri: high, pri: low は pri:に統一)、
@@ -52,7 +55,6 @@ module IssuesHelper
   # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化
   # ↑のmake_issues_list_in_csv メソッドのヘルパー
   def date_formalization(date_utc)
-    require 'time'
     date_jst = Time.parse(date_utc).getlocal('+09:00')
     ymd = date_jst.strftime('%Y/%m/%d')
     return ymd
@@ -79,23 +81,13 @@ module IssuesHelper
 
   # ヘッダーとissueリストをCSV形式にする
   def make_csv(header, issues)
-    csv = ''
-    add_csv_oneline(csv, header)
-    issues.each do |issue|
-      add_csv_oneline(csv, issue)
+    option = { row_sep:       "\r\n",
+               headers:       header.values,
+               write_headers: true
+             }
+    csv_data = CSV.generate('', option) do |csv|
+      issues.each { |line| csv << line.values }
     end
-    return csv
-  end
-
-  # CSVの1行を作成する
-  # ↑のmake_csvメソッドのヘルパー
-  def add_csv_oneline(csv, line_data)
-    line_data.each_value.with_index do |value, index|
-      str = value.to_s
-      str.gsub!('"', '""')
-      csv << '"' + str + '"'
-      csv << ',' unless index == line_data.size - 1
-    end
-    csv << "\r\n"
+    return csv_data
   end
 end
