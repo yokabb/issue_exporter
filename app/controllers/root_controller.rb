@@ -24,10 +24,7 @@ class RootController < ApplicationController
     # 所属組織の名前のリストの生成
     user_orgs_list.each { |org| @orgs << org.login }
 
-    # ユーザーが参照可能なすべてのレポジトリの名前と
-    # 各レポジトリの所有者（ユーザーまたは組織）の名前を保持する
-    # レポジトリの順は、
-    # ユーザーがownerのもの、ユーザーがcollaboratorのもの、ユーザーのorgnizationのもの
+    # レポジトリの情報（名前、所有者、issueの有無）のリストの生成
     user_repos_list.each do |repo|
       add_repo(repo) if repo.owner.login == @username
     end
@@ -46,6 +43,7 @@ class RootController < ApplicationController
 
   private
 
+  # レポジトリの情報のリストに追加
   def add_repo(repo)
     name = repo.name
     owner = repo.owner.login

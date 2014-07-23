@@ -9,7 +9,7 @@
         <tbody>
           <% # ユーザーを表示 %>
           <tr><td>
-            <h4><i class="icon-user"></i> <%= @username %></h4>
+            <h4><i class="icon-user"></i> <%= link_to "#{@username}", "/index/#{@username}" %></h4>
           </td></tr>
         </tbody>
       </table>
@@ -21,7 +21,7 @@
           <% # ユーザーの所属組織を表示 %>
           <% @orgs.each do |org| %>
             <tr><td>
-              <h4><i class="icon-home"></i> <%= org %></h4>
+              <h4><i class="icon-home"></i> <%= link_to "#{org}", "/index/#{org}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
@@ -34,7 +34,7 @@
           <% # ユーザーの協力者を表示 %>
           <% @colls.each do |coll| %>
             <tr><td>
-              <h4><i class="icon-user"></i> <%= coll %></h4>
+              <h4><i class="icon-user"></i> <%= link_to "#{coll}", "/index/#{coll}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
@@ -49,6 +49,7 @@
           <% # ユーザーのレポジトリを表示 %>
           <% # issueを持つもののみリンクを貼る %>
           <% @repos.each do |repo| %>
+            <% next unless repo.owner == params[:user] %>
             <% if repo.has_issue %>
               <tr><td>
                 <h4><%= link_to "#{repo.owner}/#{repo.name}", "/export/#{repo.owner}/#{repo.name}.csv" %></h4>
