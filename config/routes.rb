@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/index/:user'                  , to: 'root#index'
   get '/export/:user/:repo.:format'   , to: 'issues#export'
   get '/auth/:provider/callback'      , to: 'sessions#create'
   get '/logout'                       , to: 'sessions#destroy'
