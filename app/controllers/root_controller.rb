@@ -8,7 +8,7 @@ class RootController < ApplicationController
     # ユーザーと共同者のレポジトリのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token)
     @username = github.users.get(id: current_user.github_id).login
-    @colls = []
+    @collaborators = []
     @orgs = []
     @repos = []
     user_orgs_list  = github.orgs.list
@@ -17,8 +17,8 @@ class RootController < ApplicationController
     # 協力者の名前のリストの生成
     user_repos_list.each do |repo|
       next if repo.owner.login == @username
-      next if @colls.include?(repo.owner.login)
-      @colls << repo.owner.login
+      next if @collaborators.include?(repo.owner.login)
+      @collaborators << repo.owner.login
     end
 
     # 所属組織の名前のリストの生成

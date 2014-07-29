@@ -9,7 +9,7 @@
         <tbody>
           <% # ユーザーを表示 %>
           <tr><td>
-            <h4><i class="icon-user"></i> <%= link_to "#{@username}", "/index/#{@username}" %></h4>
+            <h4><i class="icon-user"></i> <%= link_to @username, "/index/#{@username}" %></h4>
           </td></tr>
         </tbody>
       </table>
@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <% # ユーザーの協力者を表示 %>
-          <% @colls.each do |coll| %>
+          <% @collaborators.each do |coll| %>
             <tr><td>
               <h4><i class="icon-user"></i> <%= link_to "#{coll}", "/index/#{coll}" %></h4>
             </td></tr>
