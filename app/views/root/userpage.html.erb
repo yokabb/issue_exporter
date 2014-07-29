@@ -21,7 +21,7 @@
           <% # ユーザーの所属組織を表示 %>
           <% @orgs.each do |org| %>
             <tr><td>
-              <h4><i class="icon-home"></i> <%= link_to "#{org}", "/index/#{org}" %></h4>
+              <h4><i class="icon-home"></i> <%= link_to org, "/index/#{org}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
@@ -34,7 +34,7 @@
           <% # ユーザーの協力者を表示 %>
           <% @collaborators.each do |coll| %>
             <tr><td>
-              <h4><i class="icon-user"></i> <%= link_to "#{coll}", "/index/#{coll}" %></h4>
+              <h4><i class="icon-user"></i> <%= link_to coll, "/index/#{coll}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
