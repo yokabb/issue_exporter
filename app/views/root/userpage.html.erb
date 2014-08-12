@@ -52,7 +52,7 @@
             <% next unless repo.owner == params[:user] %>
             <% if repo.has_issue %>
               <tr><td>
-                <h4><%= link_to "#{repo.owner}/#{repo.name}", "/export/#{repo.owner}/#{repo.name}.csv" %></h4>
+                <h4><%= link_to "#{repo.owner}/#{repo.name}", "/select/#{repo.owner}/#{repo.name}" %></h4>
               </td></tr>
             <% else %>
               <tr><td>
