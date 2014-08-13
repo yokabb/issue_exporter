@@ -1,0 +1,97 @@
+<h2> <%= @user %> / <%= @repo %> </h2>
+<form class="form-horizontal" name="select_form" action=<%= "/export/#{@user}/#{@repo}.csv"%> method="get">
+  <% # ラベルカテゴリの設定 %>
+  <div class="control-group">
+    <label class="control-label">Category in labels</label>
+    <div class ="controls">
+      <label class="radio">
+        <input type="radio" name="category" value="none" checked="checked" onclick="ResetCategorize()">
+        No category (Reset categorize)
+      </label>
+      <label class="radio">
+        <input type="radio" name="category" value="colon" onclick="CategorizeByColon()">
+        Colon(":") means category
+      </label>
+      <label class="radio">
+        <input type="radio" name="category" value="custom" onclick="AppearCustomCategorizeForm()">
+        Customize
+      </label>
+      <% @issues_items.labels.each do |label| %>
+        <label class="checkbox" style="position:relative;left:10px;display:block;">
+          <input type="checkbox" name="label-in-category-customize"><span><%= label %></span>
+        </label>
+      <% end %>
+      <input type="text" class="span3" name="new-label-input-form" id="new-label-input" style="display:none;" placeholder="New label's name">
+      <input class="btn" name="new-label-input-form" value="Categorize" style="display:none;" onClick=Categorize()>
+      <h6><ul class="unstyled" id="new-labels-output"></ul></h6>
+    </div>
+  </div>
+  <% # ラベル優先順位の設定 %>
+  <div class="control-group">
+    <label class="control-label">The order of priority in labels</label>
+    <div class="controls">
+      <span class="help-block">First</span>
+      <select name="label-pri-selects[]">
+        <option><%= "-" %></option>
+        <% @issues_items.labels.each do |label| %>
+          <option><%= label %></option>
+        <% end %>
+      </select>
+      <span class="help-block">Second</span>
+      <select name="label-pri-selects[]">
+        <option><%= "-" %></option>
+        <% @issues_items.labels.each do |label| %>
+          <option><%= label %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <% # issue項目の設定 %>
+  <div class="control-group">
+    <label class="control-label">Issue items</label>
+    <div class="controls" id="issue_items">
+      <% @issues_items.each do |item| %>
+        <label class="checkbox" style="display:block;">
+          <% if @issues_items.labels.include?(item) %>
+            <input type="checkbox" name="label-in-items[]" value=<%= item %> checked="true"><span><%= item %></span>
+          <% else %>
+            <input type="checkbox" name="items[]" value=<%= item %> checked="true"><span><%= item %></span>
+          <% end %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+  <% # pull-request有無の設定 %>
+  <div class="control-group">
+    <label class="control-label">Reference pull requests</label>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="pull-request" value="on">ON
+      </label>
+      <label class="radio">
+        <input type="radio" name="pull-request" value="off" checked="checked">OFF
+      </label>
+    </div>
+  </div>
+  <% # 空欄の設定 %>
+  <div class="control-group">
+    <label class="control-label">Blank</label>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="blank" value="">
+        Leave the space blank
+      </label>
+      <label class="radio">
+        <input type="radio" name="blank" value="-" checked="checked">
+        Fill in the blanks with hyphen("-")
+      </label>
+    </div>
+  </div>
+  <% # 送信ボタン %>
+  <input type="hidden" name="new-labels-output-data" id="new-labels-output-data" value="">
+  <div class="control-group">
+    <div class="controls">
+      <input class="btn btn-primary" type="submit" value=" Download  <%= @repo %>.csv " onclick="BeforeSubmission()">
+    </div>
+  </div>
+</form>
