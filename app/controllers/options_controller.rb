@@ -1,4 +1,4 @@
-class OptionController < ApplicationController
+class OptionsController < ApplicationController
   # 必要なissue情報を選択する
   def select
     # 選択したレポジトリの名前と、その所有者の名前を取得する
