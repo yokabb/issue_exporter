@@ -11,6 +11,6 @@ class OptionController < ApplicationController
 
     # Issues項目を保持する
     @issues_items = Issue.new
-    @issues_items.labels = labels_list.map { |label| label.name }.sort!
+    @issues_items.labels = labels_list.map { |label| label.name }.sort
   end
 end

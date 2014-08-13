@@ -30,7 +30,7 @@ function ResetCategorize(){
     labels_name_array.push(original_label_elems[i].nextSibling.innerHTML);
   }
   //全選択リストのoptionをセット
-  var label_priority_selects = document.getElementsByName("label-pri-select");
+  var label_priority_selects = document.getElementsByName("label-pri-selects[]");
   for(var k=0;k<label_priority_selects.length;k++){
     SetSelectList(label_priority_selects[k], labels_name_array);
   }
@@ -38,8 +38,8 @@ function ResetCategorize(){
   // Issue項目部分のリセット
   // 要素取得
   var issue_items = document.getElementById("issue_items");
-  var labels_in_items_elems = document.getElementsByName("label-in-items");
-  var labels_in_items_new_elems = document.getElementsByName("label-in-items-new");
+  var labels_in_items_elems = document.getElementsByName("label-in-items[]");
+  var labels_in_items_new_elems = document.getElementsByName("label-in-items-new[]");
   // 元々のラベルを表示
   for(var i=0;i<labels_in_items_elems.length;i++){
     labels_in_items_elems[i].parentNode.style.display = "block";
@@ -266,7 +266,7 @@ function UpdateLabelPriority(original_label_elems, generated_labels){
     labels_name_array.push(generated_labels[i].name);
   }
   //全選択リストのoptionをセット
-  var label_priority_selects = document.getElementsByName("label-pri-select");
+  var label_priority_selects = document.getElementsByName("label-pri-selects[]");
   for(var k=0;k<label_priority_selects.length;k++){
     SetSelectList(label_priority_selects[k], labels_name_array);
   }
@@ -294,8 +294,8 @@ function SetSelectList(select_list, labels_name_array){
 // Issue項目を生成ラベルに対応するように更新
 function UpdateIssueItems(generated_labels){
   var issue_items = document.getElementById("issue_items");
-  var labels_in_items_elems = document.getElementsByName("label-in-items");
-  var labels_in_items_new_elems = document.getElementsByName("label-in-items-new");
+  var labels_in_items_elems = document.getElementsByName("label-in-items[]");
+  var labels_in_items_new_elems = document.getElementsByName("label-in-items-new[]");
 
   // 生成ラベルに吸収された旧ラベルを非表示に
   for(var i=0;i<labels_in_items_elems.length;i++){
@@ -329,13 +329,36 @@ function UpdateIssueItems(generated_labels){
 
     var elem_checkbox = document.createElement("input");
     elem_checkbox.setAttribute("type", "checkbox");
-    elem_checkbox.setAttribute("name", "label-in-items-new");
-    elem_checkbox.setAttribute("value", "label-in-items-new");
+    elem_checkbox.setAttribute("name", "label-in-items-new[]");
+    elem_checkbox.setAttribute("value", generated_labels[i].name);
     elem_label.appendChild(elem_checkbox);
 
     var elem_span = document.createElement("span");
     elem_span.innerHTML = generated_labels[i].name;
     elem_label.appendChild(elem_span);
   }
+  return;
+}
+
+/* 送信ボタン BeforeSubmission */
+function BeforeSubmission(){
+  UpdateNewLabelsListTransmittedData();
+  return;
+}
+
+// 生成ラベルリストのテキストから生成ラベルリストの送信データを作成
+function generated_Labels_Text_to_TransmitData(generated_labels_text){
+  generated_labels_text = generated_labels_text.split("<li>").join("");
+  var strs = generated_labels_text.split("</li>");
+  strs.pop();
+  var data = strs.join("\n");
+  return data;
+}
+// 生成ラベルリストの送信データを更新
+function UpdateNewLabelsListTransmittedData(){
+  var generated_labels_text = document.getElementById("new-labels-output").innerHTML;
+  var new_labels_data = document.getElementById("new-labels-output-data");
+  var data = generated_Labels_Text_to_TransmitData(generated_labels_text);
+  new_labels_data.value = data;
   return;
 }
