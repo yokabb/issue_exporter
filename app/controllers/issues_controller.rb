@@ -7,54 +7,53 @@ class IssuesController < ApplicationController
     user = params[:user]
     repo = params[:repo]
     # フォームのパラメータを取得する
-    labels_priority     = params[:label_pri_selects] ? params[:label_pri_selects] : []
+    label_priority      = params[:label_pri_selects] ? params[:label_pri_selects] : []
     items_except_labels = params[:items] ? params[:items] : []
     labels_in_items     = params[:labels_in_items] ? params[:labels_in_items] : []
     labels_in_items_new = params[:labels_in_items_new] ? params[:labels_in_items_new] : []
-    use_pull_requests   = params[:pull_request] == 'on' ? true : false
+    use_pull_request    = params[:pull_request] == 'on' ? true : false
     blank               = params[:blank]
-    new_labels_data     = params[:new_labels_output_data] ? params[:new_labels_output_data] : ''
-    # オプションで生成されたラベルデータを扱いやすくする
-    generated_labels    = generatedLabels_text_to_array(new_labels_data)
+    generated_labels_textdata = params[:generated_labels_textdata] ? params[:generated_labels_textdata] : ''
+    # オプションの生成ラベルリストのテキストデータを、配列に変換する
+    generated_labels    = generatedLabels_text_to_array(generated_labels_textdata)
 
-    # 選択したレポジトリ内のissueのリスト, pull requestのリスト, labelのリストをGithubから取得する
+    # 選択したレポジトリ内のissueのリスト, pull requestのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token, auto_pagination: true)
-    issues_list_open   = github.issues.list(user: user, repo: repo, state: 'open')
-    issues_list_closed = github.issues.list(user: user, repo: repo, state: 'closed')
-    pull_requests_list_open   = github.pull_requests.list(user: user, repo: repo, state: 'open')
-    pull_requests_list_closed = github.pull_requests.list(user: user, repo: repo, state: 'closed')
+    issue_list_open_from_github   = github.issues.list(user: user, repo: repo, state: 'open')
+    issue_list_closed_from_github = github.issues.list(user: user, repo: repo, state: 'closed')
+    pull_request_list_open_from_github   = github.pull_requests.list(user: user, repo: repo, state: 'open')
+    pull_request_list_closed_from_github = github.pull_requests.list(user: user, repo: repo, state: 'closed')
 
-    # ヘッダーのlabel部分の表示に対する前処理を行う
-    labels_list_in_header = make_labels_list_in_header(labels_in_items, labels_in_items_new, labels_priority)
+    # ヘッダーのlabel部分を作成する
+    labels_in_header = make_labels_in_header(labels_in_items, labels_in_items_new, label_priority)
 
     # ヘッダーを作成する
-    header = make_header(items_except_labels, labels_list_in_header)
+    header = make_header(items_except_labels, labels_in_header)
 
-    # 本体（issueリスト）を作成する。ただし、#番号順
-    issues_open = make_issues_list_in_csv(issues_list_open,
-                                          pull_requests_list_open,
-                                          items_except_labels,
-                                          labels_list_in_header,
-                                          labels_in_items_new,
-                                          generated_labels,
-                                          use_pull_requests,
-                                          blank)
-    issues_closed = make_issues_list_in_csv(issues_list_closed,
-                                            pull_requests_list_closed,
-                                            items_except_labels,
-                                            labels_list_in_header,
-                                            labels_in_items_new,
-                                            generated_labels,
-                                            use_pull_requests,
-                                            blank)
-    issues = issues_open + issues_closed
-    issues.sort! { |a, b| a[:number] <=> b[:number] }
+    # issueリストを作成する
+    issue_list_open = make_issue_list_in_csv(issue_list_open_from_github,
+                                             pull_request_list_open_from_github,
+                                             items_except_labels,
+                                             labels_in_header,
+                                             labels_in_items_new,
+                                             generated_labels,
+                                             use_pull_request,
+                                             blank)
+    issue_list_closed = make_issue_list_in_csv(issue_list_closed_from_github,
+                                               pull_request_list_closed_from_github,
+                                               items_except_labels,
+                                               labels_in_header,
+                                               labels_in_items_new,
+                                               generated_labels,
+                                               use_pull_request,
+                                               blank)
+    issue_list = merge_issue_list(issue_list_open, issue_list_closed)
 
     # ヘッダーとissueリストをCSV形式にする
-    csv = make_csv(header, issues)
-    csv.prepend("\xef\xbb\xbf")
+    csv_data = make_csv(header, issue_list)
+    csv_data.prepend("\xef\xbb\xbf")
 
     # CSVファイルを出力する
-    send_data csv, type: 'text/csv', disposition: 'attachment'
+    send_data csv_data, type: 'text/csv', disposition: 'attachment'
   end
 end

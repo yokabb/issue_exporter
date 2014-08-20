@@ -6,31 +6,31 @@ require 'issues_helper.rb'
 describe IssuesHelper do
   include IssuesHelper
 
-  # make_labels_list_in_header
-  describe 'labels_list_in_header' do
+  # make_labels_in_header
+  describe 'make_labels_in_header' do
     it '%w(a b), %w(c d), %w(d b) を渡すと %w(d b a c) が返ってくること' do
       x, y, z = %w(a b), %w(c d), %w(d b)
       res = %w(d b a c)
-      expect(make_labels_list_in_header(x, y, z)).to eq(res)
+      expect(make_labels_in_header(x, y, z)).to eq(res)
     end
     it '%w(a b), [], %w(b) を渡すと %w(b a) が返ってくること' do
       x, y, z = %w(a b), [], %w(b)
       res = %w(b a)
-      expect(make_labels_list_in_header(x, y, z)).to eq(res)
+      expect(make_labels_in_header(x, y, z)).to eq(res)
     end
     it '%w(a), %w(c), %w(-) を渡すと %w(a c) が返ってくること' do
       x, y, z = %w(a), %w(c), %w()
       res = %w(a c)
-      expect(make_labels_list_in_header(x, y, z)).to eq(res)
+      expect(make_labels_in_header(x, y, z)).to eq(res)
     end
     it '%w(a b), %w(c d), %w(d c c) を渡すと %w(d c a b) が返ってくること' do
       x, y, z = %w(a b), %w(c d), %w(d c c)
       res = %w(d c a b)
-      expect(make_labels_list_in_header(x, y, z)).to eq(res)
+      expect(make_labels_in_header(x, y, z)).to eq(res)
     end
   end
 
-  # is_pull_request
+  # pull_request?
   describe 'pull_request?' do
     it "{ number: '1' }, {} を渡すと'false'が返ってくること" do
       expect(pull_request?({ user: 'a', number: '1' }, {})).to eq(false)
