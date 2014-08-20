@@ -2,7 +2,7 @@
 <form class="form-horizontal" name="select_form" action=<%= "/export/#{@user}/#{@repo}.csv"%> method="get">
   <% # ラベルカテゴリの設定 %>
   <div class="control-group">
-    <label class="control-label">Category in labels</label>
+    <label class="control-label">Category of label</label>
     <div class ="controls">
       <label class="radio">
         <input type="radio" name="category" value="none" checked="checked" onclick="ResetCategorize()">
@@ -23,12 +23,12 @@
       <% end %>
       <input type="text" class="span3" name="new_label_input_form" id="new_label_input" style="display:none;" placeholder="New label's name">
       <input class="btn" name="new_label_input_form" value="Categorize" style="display:none;" onClick=Categorize()>
-      <h6><ul class="unstyled" id="new_labels_output"></ul></h6>
+      <h6><ul class="unstyled" id="generated_labels_output"></ul></h6>
     </div>
   </div>
   <% # ラベル優先順位の設定 %>
   <div class="control-group">
-    <label class="control-label">The order of priority in labels</label>
+    <label class="control-label">Priority of label</label>
     <div class="controls">
       <span class="help-block">First</span>
       <select name="label_pri_selects[]">
@@ -63,7 +63,7 @@
   </div>
   <% # pull-request有無の設定 %>
   <div class="control-group">
-    <label class="control-label">Reference pull requests</label>
+    <label class="control-label">Reference pull request</label>
     <div class="controls">
       <label class="radio">
         <input type="radio" name="pull_request" value="on">ON
@@ -88,7 +88,7 @@
     </div>
   </div>
   <% # 送信ボタン %>
-  <input type="hidden" name="new_labels_output_data" id="new_labels_output_data" value="">
+  <input type="hidden" name="generated_labels_textdata" id="generated_labels_textdata" value="">
   <div class="control-group">
     <div class="controls">
       <input class="btn btn-primary" type="submit" value=" Download  <%= @repo %>.csv " onclick="BeforeSubmission()">

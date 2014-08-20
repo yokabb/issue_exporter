@@ -20,7 +20,7 @@ function ResetCategorize(){
     original_label_elems[i].parentNode.style.display = "block";
   }
   // 新ラベルリストを空に
-  document.getElementById("new_labels_output").innerHTML = "";
+  document.getElementById("generated_labels_output").innerHTML = "";
 
   // ラベル優先順位部分のリセット
   // 要素取得
@@ -130,7 +130,7 @@ function Categorize(){
     }
   }
   var new_label = new generatedLabel(new_label_name, new_label_components);
-  var generated_labels_text = document.getElementById("new_labels_output").innerHTML;
+  var generated_labels_text = document.getElementById("generated_labels_output").innerHTML;
   var generated_labels = generatedLabels_Text_to_Array(generated_labels_text);
 
   // 新しいラベルが正当なら生成ラベルリストに追加
@@ -233,7 +233,7 @@ function generatedLabels_Text_to_Array(generated_labels_text){
 // 生成ラベルリストの表示を更新
 function UpdateNewLabelsList(generated_labels){
   generated_labels_text = generatedLabels_Array_to_Text(generated_labels);
-  document.getElementById("new_labels_output").innerHTML = generated_labels_text;
+  document.getElementById("generated_labels_output").innerHTML = generated_labels_text;
   return;
 }
 
@@ -356,9 +356,9 @@ function generated_Labels_Text_to_TransmitData(generated_labels_text){
 }
 // 生成ラベルリストの送信データを更新
 function UpdateNewLabelsListTransmittedData(){
-  var generated_labels_text = document.getElementById("new_labels_output").innerHTML;
-  var new_labels_data = document.getElementById("new_labels_output_data");
+  var generated_labels_text = document.getElementById("generated_labels_output").innerHTML;
+  var generated_labels_textdata = document.getElementById("generated_labels_textdata");
   var data = generated_Labels_Text_to_TransmitData(generated_labels_text);
-  new_labels_data.value = data;
+  generated_labels_textdata.value = data;
   return;
 }
