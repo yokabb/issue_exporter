@@ -67,7 +67,7 @@ module IssuesHelper
   # make_issue_list_in_csvのヘルパー
   def pull_request?(issue_from_github, pull_request_list_from_github)
     return false if pull_request_list_from_github.size == 0
-    return true if pull_request_list_from_github.detect do |pull_request_from_github| 
+    return true if pull_request_list_from_github.detect do |pull_request_from_github|
       pull_request_from_github[:number] == issue_from_github[:number]
     end
     return false
