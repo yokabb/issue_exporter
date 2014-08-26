@@ -67,7 +67,7 @@ module IssuesHelper
   # make_issue_list_in_csvのヘルパー
   def pull_request?(issue_from_github, pull_request_list_from_github)
     return false if pull_request_list_from_github.size == 0
-    return true if pull_request_list_from_github.detect do |pull_request_from_github| 
+    return true if pull_request_list_from_github.detect do |pull_request_from_github|
       pull_request_from_github[:number] == issue_from_github[:number]
     end
     return false
@@ -87,6 +87,7 @@ module IssuesHelper
     item_data_except_label_data = {
         number:     issue_from_github.number,
         title:      issue_from_github.title,
+        body:       (issue_from_github.body ? issue_from_github.body : blank),
         created_at: date_formalization(issue_from_github.created_at),
         url:        issue_from_github.html_url,
         assignee:   (issue_from_github.assignee ? issue_from_github.assignee.login : blank),
