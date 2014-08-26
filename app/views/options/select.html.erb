@@ -73,6 +73,24 @@
       </label>
     </div>
   </div>
+  <% # open-issue有無/closed-issue有無の設定 %>
+  <div class="control-group">
+    <label class="control-label">Reference open issue / closed issue</label>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="issue_open_closed" value="open">
+        Open issue only
+      </label>
+      <label class="radio">
+        <input type="radio" name="issue_open_closed" value="closed">
+        Closed issue only
+      </label>
+      <label class="radio">
+        <input type="radio" name="issue_open_closed" value="open_closed" checked="checked">
+        All issue
+      </label>
+    </div>
+  </div>
   <% # 空欄の設定 %>
   <div class="control-group">
     <label class="control-label">Blank</label>
