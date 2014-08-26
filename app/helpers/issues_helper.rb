@@ -87,6 +87,7 @@ module IssuesHelper
     item_data_except_label_data = {
         number:     issue_from_github.number,
         title:      issue_from_github.title,
+        body:       (issue_from_github.body ? issue_from_github.body : blank),
         created_at: date_formalization(issue_from_github.created_at),
         url:        issue_from_github.html_url,
         assignee:   (issue_from_github.assignee ? issue_from_github.assignee.login : blank),
