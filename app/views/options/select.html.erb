@@ -21,8 +21,18 @@
           <input type="checkbox" name="labels_in_category_customize"><span><%= label %></span>
         </label>
       <% end %>
-      <input type="text" class="span3" name="new_label_input_form" id="new_label_input" style="display:none;" placeholder="New label's name">
-      <input class="btn" name="new_label_input_form" value="Categorize" style="display:none;" onClick=Categorize()>
+      <table class="table-condensed">
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" class="span3" id="new_label_input_textbox" placeholder="New label's name">
+            </td>
+            <td>
+              <input class="btn disabled" type="button" id="new_label_input_button" value="Categorize" onClick=Categorize()>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <h6><ul class="unstyled" id="generated_labels_output"></ul></h6>
     </div>
   </div>
@@ -30,20 +40,31 @@
   <div class="control-group">
     <label class="control-label">Priority of label</label>
     <div class="controls">
-      <span class="help-block">First</span>
-      <select name="label_pri_selects[]">
-        <option><%= "-" %></option>
-        <% @issues_items.labels.each do |label| %>
-          <option><%= label %></option>
-        <% end %>
-      </select>
-      <span class="help-block">Second</span>
-      <select name="label_pri_selects[]">
-        <option><%= "-" %></option>
-        <% @issues_items.labels.each do |label| %>
-          <option><%= label %></option>
-        <% end %>
-      </select>
+      <table class="table-condensed">
+        <thread>
+          <tr style="text-align:left;"><th>First</th><th>Second</th></tr>
+        </thread>
+        <tbody>
+          <tr>
+            <td>
+              <select name="label_pri_selects[]">
+                <option><%= "-" %></option>
+                <% @issues_items.labels.each do |label| %>
+                  <option><%= label %></option>
+                <% end %>
+              </select>
+            </td>
+            <td>
+              <select name="label_pri_selects[]">
+                <option><%= "-" %></option>
+                <% @issues_items.labels.each do |label| %>
+                  <option><%= label %></option>
+                <% end %>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <% # issue項目の設定 %>
@@ -65,12 +86,22 @@
   <div class="control-group">
     <label class="control-label">Reference pull request</label>
     <div class="controls">
-      <label class="radio">
-        <input type="radio" name="pull_request" value="on">ON
-      </label>
-      <label class="radio">
-        <input type="radio" name="pull_request" value="off" checked="checked">OFF
-      </label>
+      <table class="table-condensed">
+        <tbody>
+          <tr>
+            <td>
+              <label class="radio">
+                <input type="radio" name="pull_request" value="on">ON
+              </label>
+            </td>
+            <td>
+              <label class="radio">
+                <input type="radio" name="pull_request" value="off" checked="checked">OFF
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <% # open-issue有無/closed-issue有無の設定 %>
