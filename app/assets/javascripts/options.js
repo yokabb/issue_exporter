@@ -336,6 +336,32 @@ function UpdateIssueItems(generated_labels){
   return;
 }
 
+/* 取得するIssueの日付範囲設定input */
+// 入力欄を有効に
+function IssueRangeEnable(){
+  var date_start_input = document.getElementById("issue_date_start");
+  var date_end_input = document.getElementById("issue_date_end");
+  date_start_input.disabled = false;
+  date_end_input.disabled = false;
+  return;
+}
+// 入力欄を無効に
+function IssueRangeDisable(){
+  var date_start_input = document.getElementById("issue_date_start");
+  var date_end_input = document.getElementById("issue_date_end");
+  date_start_input.disabled = true;
+  date_end_input.disabled = true;
+  return;
+}
+// 日付範囲の終了日を開始日以降に制限する
+function SetEndDateMin(){
+  if(this.value == "") return;
+  date_start = document.getElementById("issue_date_start");
+  date_end = document.getElementById("issue_date_end");
+  date_end.min = date_start.value;
+  return;
+}
+
 /* 送信ボタン BeforeSubmission */
 function BeforeSubmission(){
   UpdateNewLabelsListTransmittedData();

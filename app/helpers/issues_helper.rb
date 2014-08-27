@@ -47,10 +47,15 @@ module IssuesHelper
                              labels_in_items_new,
                              generated_labels,
                              use_pull_request,
+                             use_issue_date_range,
+                             issue_date_start,
+                             issue_date_end,
                              blank)
     issue_list_in_csv = []
     issue_list_from_github.each do |issue_from_github|
       next if !use_pull_request && pull_request?(issue_from_github, pull_request_list_from_github)
+      next if use_issue_date_range &&
+              !in_date_range?(issue_from_github.created_at, issue_date_start, issue_date_end)
       issue_data = add_item_data_except_label_data(issue_from_github, items_except_labels, blank)
       issue_data = add_label_data(issue_data,
                                   issue_from_github,
@@ -73,12 +78,15 @@ module IssuesHelper
     return false
   end
 
-  # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化をする
+  # issueの登録日(JST)が指定された日付範囲内のものか判断する
   # make_issue_list_in_csvのヘルパー
-  def date_formalization(date_utc)
+  def in_date_range?(date_utc, date_start, date_end)
     date_jst = Time.parse(date_utc).getlocal('+09:00')
-    ymd = date_jst.strftime('%Y/%m/%d')
-    return ymd
+    date = date_jst.strftime('%Y%m%d').to_i
+    date_start = Time.parse(date_start).strftime('%Y%m%d').to_i
+    date_end = Time.parse(date_end).strftime('%Y%m%d').to_i
+    return true if date_start <= date && date <= date_end
+    return false
   end
 
   # issue_data（label除く）を生成する
@@ -98,8 +106,16 @@ module IssuesHelper
     return item_data_except_label_data
   end
 
+  # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化をする
+  # add_item_data_except_label_dataのヘルパー
+  def date_formalization(date_utc)
+    date_jst = Time.parse(date_utc).getlocal('+09:00')
+    ymd = date_jst.strftime('%Y/%m/%d')
+    return ymd
+  end
+
   # issue_data（label除く）のなかみをoption_items（label除く）に含まれているもののみにする
-  # make_issue_list_in_csvのヘルパー
+  # add_item_data_except_label_dataのヘルパー
   def delete_unnecessary_item_data(item_data_except_label_data, option_items_except_labels)
     original_issue = Issue.new
     original_issue.each_with_index do |original_item, index|

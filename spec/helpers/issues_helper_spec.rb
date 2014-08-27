@@ -43,6 +43,25 @@ describe IssuesHelper do
     end
   end
 
+  # in_date_range?
+  describe 'in_date_range?' do
+    it "'2014-01-01T12:34:56Z', '2014-01-01', '2014-02-01' 渡すと'true'が返ってくること" do
+      expect(in_date_range?('2014-01-01T12:34:56Z', '2014-01-01', '2014-02-01')).to eq(true)
+    end
+    it "'2013-12-31T14:59:59Z', '2014-01-01', '2014-02-01' 渡すと'false'が返ってくること" do
+      expect(in_date_range?('2013-12-31T14:59:59Z', '2014-01-01', '2014-02-01')).to eq(false)
+    end
+    it "'2013-12-31T15:00:00Z', '2014-01-01', '2014-02-01' 渡すと'true'が返ってくること" do
+      expect(in_date_range?('2013-12-31T15:00:00Z', '2014-01-01', '2014-02-01')).to eq(true)
+    end
+    it "'2014-02-01T14:59:59Z', '2014-01-01', '2014-02-01' 渡すと'true'が返ってくること" do
+      expect(in_date_range?('2014-02-01T14:59:59Z', '2014-01-01', '2014-02-01')).to eq(true)
+    end
+    it "'2014-02-01T15:00:00Z', '2014-01-01', '2014-02-01' 渡すと'false'が返ってくること" do
+      expect(in_date_range?('2014-02-01T15:00:00Z', '2014-01-01', '2014-02-01')).to eq(false)
+    end
+  end
+
   # date_formalization
   describe 'date_formalization' do
     it "'2014-07-09T12:34:56Z' を渡すと'2014/07/09'が返ってくること" do

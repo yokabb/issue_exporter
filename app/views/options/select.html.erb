@@ -41,9 +41,9 @@
     <label class="control-label">Priority of label</label>
     <div class="controls">
       <table class="table-condensed">
-        <thread>
+        <thead>
           <tr style="text-align:left;"><th>First</th><th>Second</th></tr>
-        </thread>
+        </thead>
         <tbody>
           <tr>
             <td>
@@ -109,6 +109,10 @@
     <label class="control-label">Reference open issue / closed issue</label>
     <div class="controls">
       <label class="radio">
+        <input type="radio" name="issue_open_closed" value="open_closed" checked="checked">
+        All issue
+      </label>
+      <label class="radio">
         <input type="radio" name="issue_open_closed" value="open">
         Open issue only
       </label>
@@ -116,10 +120,35 @@
         <input type="radio" name="issue_open_closed" value="closed">
         Closed issue only
       </label>
+    </div>
+  </div>
+  <% # Issueの日付範囲の設定 %>
+  <div class="control-group">
+    <label class="control-label">Issue date range</label>
+    <div class="controls">
       <label class="radio">
-        <input type="radio" name="issue_open_closed" value="open_closed" checked="checked">
+        <input type="radio" name="issue_date_range" value="all" checked="checked" onclick="IssueRangeDisable()">
         All issue
       </label>
+      <label class="radio">
+        <input type="radio" name="issue_date_range" value="date_range" onclick="IssueRangeEnable()">
+        Issue in the date range only
+      </label>
+      <table class="table-condensed">
+        <thead>
+          <tr style="text-align:left;"><th>Start date</th><th>End date</th><tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="date" name="issue_date_start" id="issue_date_start" value="" max="" required disabled="disabled" onblur="SetEndDateMin()"></li>
+            </td>
+            <td>
+             <input type="date" name="issue_date_end" id="issue_date_end" value="" min=""  required disabled="disabled"></li>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <% # 空欄の設定 %>

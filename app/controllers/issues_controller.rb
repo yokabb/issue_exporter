@@ -7,14 +7,17 @@ class IssuesController < ApplicationController
     user = params[:user]
     repo = params[:repo]
     # フォームのパラメータを取得する
-    label_priority      = params[:label_pri_selects] ? params[:label_pri_selects] : []
-    items_except_labels = params[:items] ? params[:items] : []
-    labels_in_items     = params[:labels_in_items] ? params[:labels_in_items] : []
-    labels_in_items_new = params[:labels_in_items_new] ? params[:labels_in_items_new] : []
-    use_pull_request    = params[:pull_request] == 'on' ? true : false
-    use_issue_open      = params[:issue_open_closed].include?('open')
-    use_issue_closed    = params[:issue_open_closed].include?('closed')
-    blank               = params[:blank]
+    label_priority       = params[:label_pri_selects] ? params[:label_pri_selects] : []
+    items_except_labels  = params[:items] ? params[:items] : []
+    labels_in_items      = params[:labels_in_items] ? params[:labels_in_items] : []
+    labels_in_items_new  = params[:labels_in_items_new] ? params[:labels_in_items_new] : []
+    use_pull_request     = params[:pull_request] == 'on' ? true : false
+    use_issue_open       = params[:issue_open_closed].include?('open')
+    use_issue_closed     = params[:issue_open_closed].include?('closed')
+    use_issue_date_range = params[:issue_date_range] == 'date_range'
+    issue_date_start     = params[:issue_date_start]
+    issue_date_end       = params[:issue_date_end]
+    blank                = params[:blank]
     generated_labels_textdata = params[:generated_labels_textdata] ? params[:generated_labels_textdata] : ''
     # オプションの生成ラベルリストのテキストデータを、配列に変換する
     generated_labels    = generatedLabels_text_to_array(generated_labels_textdata)
@@ -43,6 +46,9 @@ class IssuesController < ApplicationController
                                                labels_in_items_new,
                                                generated_labels,
                                                use_pull_request,
+                                               use_issue_date_range,
+                                               issue_date_start,
+                                               issue_date_end,
                                                blank)
     end
     if use_issue_closed
@@ -53,6 +59,9 @@ class IssuesController < ApplicationController
                                                  labels_in_items_new,
                                                  generated_labels,
                                                  use_pull_request,
+                                                 use_issue_date_range,
+                                                 issue_date_start,
+                                                 issue_date_end,
                                                  blank)
     end
     issue_list = merge_issue_list(issue_list_open, issue_list_closed)
