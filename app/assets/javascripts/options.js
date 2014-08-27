@@ -87,7 +87,7 @@ function CategorizeByColon(){
       }
     }
     // InputTextboxに新ラベル名をセット
-    document.getElementById("new_label_input").value = new_label_name;
+    document.getElementById("new_label_input_textbox").value = new_label_name;
     // カテゴリ化を実行
     Categorize();
   }
@@ -95,20 +95,16 @@ function CategorizeByColon(){
 }
 
 /* radioボタン3つ目 Customize */
-// CustomizeのTextboxとButtonを表示
+// CustomizeのButtonを有効に
 function AppearCustomCategorizeForm(){
-  var new_label_input_forms = document.getElementsByName("new_label_input_form");
-  for(var i=0;i<new_label_input_forms.length;i++){
-    new_label_input_forms[i].style.display = "block";
-  }
+  var new_label_input_button = document.getElementById("new_label_input_button");
+  new_label_input_button.className = "btn";
   return;
 }
-// CustomizeのTextboxとButtonを非表示。Radioボタン1つ目または2つ目を押したとき用
+// CustomizeのButtonを無効に。Radioボタン1つ目または2つ目を押したとき用
 function DisappearCustomCategorizeForm(){
-  var new_label_input_forms = document.getElementsByName("new_label_input_form");
-  for(var i=0;i<new_label_input_forms.length;i++){
-    new_label_input_forms[i].style.display = "none";
-  }
+  var new_label_input_button = document.getElementById("new_label_input_button");
+  new_label_input_button.className = "btn disabled";
   return;
 }
 
@@ -122,7 +118,7 @@ function generatedLabel(name, components){
 // ラベルカテゴリのカスタマイズ(main)
 function Categorize(){
   var original_label_elems = document.getElementsByName("labels_in_category_customize");
-  var new_label_name = document.getElementById("new_label_input").value;
+  var new_label_name = document.getElementById("new_label_input_textbox").value;
   var new_label_components = new Array;
   for(var i=0;i<original_label_elems.length;i++){
     if(original_label_elems[i].checked){
@@ -190,7 +186,7 @@ function isValidNewLabel(new_label, generated_labels, original_label_elems){
 
 // 新しいラベルの名前入力テキストボックスを空にする
 function ClearInputTextBox(){
-  document.getElementById("new_label_input").value = "";
+  document.getElementById("new_label_input_textbox").value = "";
   return;
 }
 
