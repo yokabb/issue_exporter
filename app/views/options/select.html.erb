@@ -1,5 +1,5 @@
 <h2> <%= @user %> / <%= @repo %> </h2>
-<form class="form-horizontal" name="select_form" action=<%= "/export/#{@user}/#{@repo}.csv"%> method="get">
+<form class="form-horizontal" name="select_form" action="<%= "/export/#{@user}/#{@repo}.csv"%>" method="get">
   <% # ラベルカテゴリの設定 %>
   <div class="control-group">
     <label class="control-label">Category of label</label>
@@ -28,7 +28,7 @@
               <input type="text" class="span3" id="new_label_input_textbox" placeholder="New label's name">
             </td>
             <td>
-              <input class="btn disabled" type="button" id="new_label_input_button" value="Categorize" onClick=Categorize()>
+              <input class="btn disabled" type="button" id="new_label_input_button" value="Categorize" onclick="Categorize()">
             </td>
           </tr>
         </tbody>
@@ -48,7 +48,7 @@
           <tr>
             <td>
               <select name="label_pri_selects[]">
-                <option><%= "-" %></option>
+                <option>-</option>
                 <% @issues_items.labels.each do |label| %>
                   <option><%= label %></option>
                 <% end %>
@@ -74,9 +74,9 @@
       <% @issues_items.each do |item| %>
         <label class="checkbox" style="display:block;">
           <% if @issues_items.labels.include?(item) %>
-            <input type="checkbox" name="labels_in_items[]" value=<%= item %> checked="true"><span><%= item %></span>
+            <input type="checkbox" name="labels_in_items[]" value="<%= item %>" checked="true"><span><%= item %></span>
           <% else %>
-            <input type="checkbox" name="items[]" value=<%= item %> checked="true"><span><%= item %></span>
+            <input type="checkbox" name="items[]" value="<%= item %>" checked="true"><span><%= item %></span>
           <% end %>
         </label>
       <% end %>
