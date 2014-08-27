@@ -89,14 +89,6 @@ module IssuesHelper
     return false
   end
 
-  # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化をする
-  # make_issue_list_in_csvのヘルパー
-  def date_formalization(date_utc)
-    date_jst = Time.parse(date_utc).getlocal('+09:00')
-    ymd = date_jst.strftime('%Y/%m/%d')
-    return ymd
-  end
-
   # issue_data（label除く）を生成する
   # make_issue_list_in_csvのヘルパー
   def add_item_data_except_label_data(issue_from_github, items_except_labels, blank)
@@ -114,8 +106,16 @@ module IssuesHelper
     return item_data_except_label_data
   end
 
+  # 日本標準時(JST)に変換し、時刻のyyyy/mm/dd形式化をする
+  # add_item_data_except_label_dataのヘルパー
+  def date_formalization(date_utc)
+    date_jst = Time.parse(date_utc).getlocal('+09:00')
+    ymd = date_jst.strftime('%Y/%m/%d')
+    return ymd
+  end
+
   # issue_data（label除く）のなかみをoption_items（label除く）に含まれているもののみにする
-  # make_issue_list_in_csvのヘルパー
+  # add_item_data_except_label_dataのヘルパー
   def delete_unnecessary_item_data(item_data_except_label_data, option_items_except_labels)
     original_issue = Issue.new
     original_issue.each_with_index do |original_item, index|
