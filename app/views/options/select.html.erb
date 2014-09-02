@@ -127,28 +127,36 @@
     <label class="control-label">Issue date range</label>
     <div class="controls">
       <label class="radio">
-        <input type="radio" name="issue_date_range" value="all" checked="checked" onclick="IssueRangeDisable()">
+        <input type="radio" name="issue_date_range" value="all" checked="checked" onclick="IssueDateRangeDisable()">
         All issue
       </label>
       <label class="radio">
-        <input type="radio" name="issue_date_range" value="date_range" onclick="IssueRangeEnable()">
+        <input type="radio" name="issue_date_range" value="date_range" onclick="IssueDateRangeEnable()">
         Issue in the date range only
       </label>
-      <table class="table-condensed">
-        <thead>
-          <tr style="text-align:left;"><th>Start date</th><th>End date</th><tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type="date" name="issue_date_start" id="issue_date_start" value="" max="" required disabled="disabled" onblur="SetEndDateMin()"></li>
-            </td>
-            <td>
-             <input type="date" name="issue_date_end" id="issue_date_end" value="" min=""  required disabled="disabled"></li>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <input type="text" name="issue_date_range_input" id="issue_date_range_input" value="" placeholder="start-date end-date" disabled="disabled" onclick="Scroll()">
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('input[name="issue_date_range_input"]').daterangepicker(
+              {
+               startDate: new Date(),
+               endDate: new Date(),
+               ranges: {
+                 'Last 7 days': [moment().subtract('days', 6), new Date()],
+                 'This month':  [moment().startOf('month'), new Date],
+                 'Last month':  [moment().subtract('months', 1).startOf('month'), moment().subtract('months', 1).endOf('month')],
+                 'This Year':   [moment().startOf('year'), new Date()],
+                 'Last Year':   [moment().subtract('years', 1).startOf('year'), moment().subtract('years', 1).endOf('year')]
+               },
+               format: 'YYYY/MM/DD',
+               showDropdowns: true,
+               opens: 'right'
+              }
+            );
+          });
+        </script>
+      </div>
     </div>
   </div>
   <% # 空欄の設定 %>

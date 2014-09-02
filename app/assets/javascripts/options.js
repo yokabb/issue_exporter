@@ -338,27 +338,21 @@ function UpdateIssueItems(generated_labels){
 
 /* 取得するIssueの日付範囲設定input */
 // 入力欄を有効に
-function IssueRangeEnable(){
-  var date_start_input = document.getElementById("issue_date_start");
-  var date_end_input = document.getElementById("issue_date_end");
-  date_start_input.disabled = false;
-  date_end_input.disabled = false;
+function IssueDateRangeEnable(){
+  var date_range_input = document.getElementById("issue_date_range_input");
+  date_range_input.disabled = false;
   return;
 }
 // 入力欄を無効に
-function IssueRangeDisable(){
-  var date_start_input = document.getElementById("issue_date_start");
-  var date_end_input = document.getElementById("issue_date_end");
-  date_start_input.disabled = true;
-  date_end_input.disabled = true;
+function IssueDateRangeDisable(){
+  var date_range_input = document.getElementById("issue_date_range_input");
+  date_range_input.disabled = true;
   return;
 }
-// 日付範囲の終了日を開始日以降に制限する
-function SetEndDateMin(){
-  if(this.value == "") return;
-  date_start = document.getElementById("issue_date_start");
-  date_end = document.getElementById("issue_date_end");
-  date_end.min = date_start.value;
+//カレンダーの表示が見切れないように画面を下にスクロール
+function Scroll(){
+  var scroll_top = document.documentElement.scrollTop || document.body.scrollTop;
+  window.scrollBy(scroll_top, 1000);
   return;
 }
 
