@@ -15,8 +15,8 @@ class IssuesController < ApplicationController
     use_issue_open       = params[:issue_open_closed].include?('open')
     use_issue_closed     = params[:issue_open_closed].include?('closed')
     use_issue_date_range = params[:issue_date_range] == 'date_range'
-    issue_date_start     = params[:issue_date_start]
-    issue_date_end       = params[:issue_date_end]
+    issue_date_start     = params[:issue_date_range_input].split.first
+    issue_date_end       = params[:issue_date_range_input].split.last
     blank                = params[:blank]
     generated_labels_textdata = params[:generated_labels_textdata] ? params[:generated_labels_textdata] : ''
     # オプションの生成ラベルリストのテキストデータを、配列に変換する

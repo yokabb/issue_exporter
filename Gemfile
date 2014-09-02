@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 ruby '2.1.2'
 
@@ -56,3 +57,6 @@ end
 gem 'bootstrap-sass', '2.3.2.0'
 
 gem 'rspec',  '~> 3.0.0'
+
+gem 'rails-assets-bootstrap-daterangepicker'
+gem 'rails-assets-jquery', '1.11.1'
