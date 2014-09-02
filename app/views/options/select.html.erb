@@ -1,5 +1,5 @@
 <h2> <%= @user %> / <%= @repo %> </h2>
-<form class="form-horizontal" name="select_form" action="<%= "/export/#{@user}/#{@repo}.csv"%>" method="get">
+<form class="form-horizontal" name="select_form" action="<%= "/export/#{@user}/#{@repo}.csv"%>" method="get" onsubmit="return BeforeSubmission()">
   <% # ラベルカテゴリの設定 %>
   <div class="control-group">
     <label class="control-label">Category of label</label>
@@ -177,7 +177,7 @@
   <input type="hidden" name="generated_labels_textdata" id="generated_labels_textdata" value="">
   <div class="control-group">
     <div class="controls">
-      <input class="btn btn-primary" type="submit" value=" Download  <%= @repo %>.csv " onclick="BeforeSubmission()">
+      <input class="btn btn-primary" type="submit" value=" Download  <%= @repo %>.csv ">
     </div>
   </div>
 </form>
