@@ -1,4 +1,4 @@
-<h2> <%= @user %> / <%= @repo %> </h2>
+<h2 class="center margin-all"><%= @user %> / <span style="color:maroon;"><%= @repo %></span></h2>
 <form class="form-horizontal" name="select_form" action="<%= "/export/#{@user}/#{@repo}.csv"%>" method="get" onsubmit="return BeforeSubmission()">
   <% # ラベルカテゴリの設定 %>
   <div class="control-group">

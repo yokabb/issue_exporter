@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h2>Welcome <span class="user"><%= @username %></span> !</h2>
+  <h2 class="center margin-all">Welcome <span style="color:maroon"><%= @username %></span> !</h2>
   <div class="row-fluid">
     <div class="span3 offset1">
       <table class="table table-condensed">
@@ -9,7 +9,7 @@
         <tbody>
           <% # ユーザーを表示 %>
           <tr><td>
-            <h4><i class="icon-user"></i> <%= link_to @username, "/index/#{@username}" %></h4>
+            <h4 class="indent"><i class="icon-user"></i> <%= link_to @username, "/index/#{@username}" %></h4>
           </td></tr>
         </tbody>
       </table>
@@ -21,7 +21,7 @@
           <% # ユーザーの所属組織を表示 %>
           <% @orgs.each do |org| %>
             <tr><td>
-              <h4><i class="icon-home"></i> <%= link_to org, "/index/#{org}" %></h4>
+              <h4 class="indent"><i class="icon-home"></i> <%= link_to org, "/index/#{org}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
@@ -34,7 +34,7 @@
           <% # ユーザーの協力者を表示 %>
           <% @collaborators.each do |coll| %>
             <tr><td>
-              <h4><i class="icon-user"></i> <%= link_to coll, "/index/#{coll}" %></h4>
+              <h4 class="indent"><i class="icon-user"></i> <%= link_to coll, "/index/#{coll}" %></h4>
             </td></tr>
           <% end %>
         </tbody>
@@ -52,11 +52,11 @@
             <% next unless repo.owner == params[:user] %>
             <% if repo.has_issue %>
               <tr><td>
-                <h4><%= link_to "#{repo.owner}/#{repo.name}", "/select/#{repo.owner}/#{repo.name}" %></h4>
+                <h4 class="indent" style="color:gray"><%= link_to "#{repo.owner}/#{repo.name}", "/select/#{repo.owner}/#{repo.name}" %></h4>
               </td></tr>
             <% else %>
               <tr><td>
-                <h4><%= "#{repo.owner}/#{repo.name}" %></h4>
+                <h4 class="indent" style="color:gray"><%= "#{repo.owner}/#{repo.name}" %></h4>
               </td></tr>
             <% end %>
           <% end %>
