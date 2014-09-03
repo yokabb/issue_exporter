@@ -20,7 +20,7 @@ class IssuesController < ApplicationController
     blank                = params[:blank]
     generated_labels_textdata = params[:generated_labels_textdata] ? params[:generated_labels_textdata] : ''
     # オプションの生成ラベルリストのテキストデータを、配列に変換する
-    generated_labels    = generatedLabels_text_to_array(generated_labels_textdata)
+    generated_labels    = generated_labels_text_to_array(generated_labels_textdata)
 
     # 選択したレポジトリ内のissueのリスト, pull requestのリストをGithubから取得する
     github = Github.new(oauth_token: current_user.access_token, auto_pagination: true)
