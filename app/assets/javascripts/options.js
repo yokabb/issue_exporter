@@ -358,8 +358,30 @@ function Scroll(){
 
 /* 送信ボタン BeforeSubmission */
 function BeforeSubmission(){
+  if(!isValidForm()) return false;
   UpdateNewLabelsListTransmittedData();
-  return;
+  return true;
+}
+
+// フォームの入力が正しいか判断する
+function isValidForm(){
+  if(!isValidForm_IssueDateRange()) return false;
+  return true;
+}
+// Issue_date_range 部分のチェック
+function isValidForm_IssueDateRange(){
+  var issue_date_range_input = document.getElementById("issue_date_range_input");
+  if(issue_date_range_input.disabled == true) return true;
+
+  var str = issue_date_range_input.value;
+  var array = str.split(" ");
+  var start_date = array[0];
+  var end_date = array[array.length - 1];
+  if(!moment(start_date, "YYYY/MM/DD", true).isValid() || !moment(end_date, "YYYY/MM/DD", true).isValid()){
+    alert("Issue date range is invalid");
+    return false;
+  }
+  return true;
 }
 
 // 生成ラベルリストのテキストから生成ラベルリストの送信データを作成
