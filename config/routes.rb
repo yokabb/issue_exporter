@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get '/export/:user/:repo.:format'   , to: 'issues#export'
   get '/auth/:provider/callback'      , to: 'sessions#create'
   get '/logout'                       , to: 'sessions#destroy'
+  get 'support_pages/about'           , to: 'support_pages#about'
+  get 'support_pages/privacy'         , to: 'support_pages#privacy'
+  get 'support_pages/terms'           , to: 'support_pages#terms'
+  get 'support_pages/contact'         , to: 'support_pages#contact'
   root 'root#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

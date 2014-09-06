@@ -1,0 +1,2 @@
+module SupportPagesHelper
+end

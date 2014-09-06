@@ -28,5 +28,18 @@
     <div class="container">
       <%= yield %>
     <div>
+    <footer class="footer">
+      <ul class="nav pull-left">
+        <li><%= link_to "Home", root_path %></li>
+      </ul>
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "About"  , '/support_pages/about' %></li>
+          <li><%= link_to "Privacy", '/support_pages/privacy' %></li>
+          <li><%= link_to "Terms"  , '/support_pages/terms' %></li>
+          <li><%= link_to "Contact", '/support_pages/contact' %></li>
+        </ul>
+      </nav>
+    </footer>
   </body>
 </html>

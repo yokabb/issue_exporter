@@ -3,7 +3,7 @@ require 'csv'
 
 module IssuesHelper
   # オプションの生成ラベルリストのテキストデータを、配列に変換する
-  def generatedLabels_text_to_array(generated_labels_textdata)
+  def generated_labels_text_to_array(generated_labels_textdata)
     return [] if generated_labels_textdata.empty?
     generated_labels_array = []
     generated_labels_textdata.each_line do |line|
@@ -93,14 +93,14 @@ module IssuesHelper
   # make_issue_list_in_csvのヘルパー
   def add_item_data_except_label_data(issue_from_github, items_except_labels, blank)
     item_data_except_label_data = {
-        number:     issue_from_github.number,
-        title:      issue_from_github.title,
-        body:       (issue_from_github.body ? issue_from_github.body : blank),
-        created_at: date_formalization(issue_from_github.created_at),
-        url:        issue_from_github.html_url,
-        assignee:   (issue_from_github.assignee ? issue_from_github.assignee.login : blank),
-        milestone:  (issue_from_github.milestone ? issue_from_github.milestone.title : blank),
-        state:      issue_from_github.state,
+      number:     issue_from_github.number,
+      title:      issue_from_github.title,
+      body:       (issue_from_github.body ? issue_from_github.body : blank),
+      created_at: date_formalization(issue_from_github.created_at),
+      url:        issue_from_github.html_url,
+      assignee:   (issue_from_github.assignee ? issue_from_github.assignee.login : blank),
+      milestone:  (issue_from_github.milestone ? issue_from_github.milestone.title : blank),
+      state:      issue_from_github.state,
     }
     delete_unnecessary_item_data(item_data_except_label_data, items_except_labels)
     return item_data_except_label_data
