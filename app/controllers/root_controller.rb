@@ -2,6 +2,11 @@ class RootController < ApplicationController
   # ログイン画面（ユーザーはサインインしていない場合）
   # ユーザー画面（ユーザーはサインイン済の場合）
   def index
+    # 利用規約承認画面から来た場合にユーザー情報の更新
+    if params[:approve] == 'true'
+      current_user.approved_terms = true
+      current_user.save
+    end
     return unless logged_in?
 
     # ユーザーの所属組織のリストと

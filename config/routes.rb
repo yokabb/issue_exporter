@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'support_pages/privacy'         , to: 'support_pages#privacy'
   get 'support_pages/terms'           , to: 'support_pages#terms'
   get 'support_pages/contact'         , to: 'support_pages#contact'
+  get 'support_pages/approval'        , to: 'support_pages#approval'
   root 'root#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
