@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604054730) do
+ActiveRecord::Schema.define(version: 20140909053142) do
 
   create_table 'users', force: true do |t|
     t.integer  'github_id'
     t.string   'access_token'
     t.datetime 'created_at'
     t.datetime 'updated_at'
+    t.boolean  'approved_terms'
   end
 
 end
