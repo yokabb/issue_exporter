@@ -10,4 +10,9 @@ class SupportPagesController < ApplicationController
 
   def contact
   end
+
+  def approval
+    # 誤ったアクセス防止
+    redirect_to root_path if !current_user || logged_in?
+  end
 end

@@ -8,18 +8,26 @@ class SessionsController < ApplicationController
 
     # データベースにユーザーの情報がない場合は登録する
     unless user
-      user = User.new(github_id: auth['uid'], access_token: auth['credentials']['token'])
+      user = User.new(github_id: auth['uid'], access_token: auth['credentials']['token'], approved_terms: false)
       user.save
     end
 
-    # ユーザーの情報が更新されていた場合は更新する
+    # ユーザーのアクセストークンの情報が更新されていた場合は更新する
     if user.access_token != auth['credentials']['token']
       user.access_token = auth['credentials']['token']
       user.save
     end
 
+    # セッションの確立
     session[:user_id] = user.id
-    redirect_to root_path
+
+    # ユーザーが利用規約を承認している場合は、ユーザー画面へ
+    # 承認していない場合は、利用規約承認画面へ
+    if user.approved_terms
+      redirect_to root_path
+    else
+      redirect_to '/support_pages/approval'
+    end
   end
 
   # ユーザーをサインアウトさせ、サインイン画面に戻す
