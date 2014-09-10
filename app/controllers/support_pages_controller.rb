@@ -12,7 +12,7 @@ class SupportPagesController < ApplicationController
   end
 
   def approval
-    # Œë‚Á‚½ƒAƒNƒZƒX–hŽ~
+    # èª¤ã£ãŸã‚¢ã‚¯ã‚»ã‚¹é˜²æ­¢
     redirect_to root_path if !current_user || logged_in?
   end
 end
