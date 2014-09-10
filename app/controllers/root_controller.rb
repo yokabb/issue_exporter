@@ -5,6 +5,7 @@ class RootController < ApplicationController
     # 利用規約承認画面から来た場合にユーザー情報の更新
     if params[:approve] == 'true'
       current_user.approved_terms = true
+      current_user.approved_terms_at = Time.now
       current_user.save
     end
     return unless logged_in?
