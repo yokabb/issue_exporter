@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910002039) do
+ActiveRecord::Schema.define(version: 20140924043048) do
 
   create_table 'users', force: true do |t|
     t.integer  'github_id'
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140910002039) do
     t.datetime 'updated_at'
     t.boolean  'approved_terms'
     t.datetime 'approved_terms_at'
+    t.string   'name'
   end
 
 end
