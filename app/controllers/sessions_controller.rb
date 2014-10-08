@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     # データベースにユーザーの情報がない場合は登録する
     user ||= create_user(auth)
 
-    # ユーザーの情報が更新されていた場合は更新する
+    # ユーザーの情報を更新する
     update_user(user, auth)
 
     # セッションの確立
@@ -45,15 +45,13 @@ class SessionsController < ApplicationController
 
   # ユーザー更新
   def update_user(user, auth)
-    # ユーザーのアクセストークン
-    if user.access_token != auth['credentials']['token']
-      user.access_token = auth['credentials']['token']
-      user.save
-    end
-    # ユーザーの名前
-    if user.name != auth['extra']['raw_info']['login']
-      user.name = auth['extra']['raw_info']['login']
-      user.save
-    end
+    # アクセストークン
+    user.access_token = auth['credentials']['token']
+    # 名前
+    user.name = auth['extra']['raw_info']['login']
+    # 最終ログイン時刻
+    user.last_login_at = Time.now
+    # 保存
+    user.save
   end
 end
