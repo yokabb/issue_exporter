@@ -7,16 +7,10 @@ class SessionsController < ApplicationController
     user = User.find_by(github_id: auth['uid'])
 
     # データベースにユーザーの情報がない場合は登録する
-    unless user
-      user = User.new(github_id: auth['uid'], access_token: auth['credentials']['token'], approved_terms: false)
-      user.save
-    end
+    user ||= create_user(auth)
 
-    # ユーザーのアクセストークンの情報が更新されていた場合は更新する
-    if user.access_token != auth['credentials']['token']
-      user.access_token = auth['credentials']['token']
-      user.save
-    end
+    # ユーザーの情報を更新する
+    update_user(user, auth)
 
     # セッションの確立
     session[:user_id] = user.id
@@ -35,5 +29,29 @@ class SessionsController < ApplicationController
   def destroy
     session.delete(:user_id)
     redirect_to root_path
+  end
+
+  private
+
+  # ユーザー登録
+  def create_user(auth)
+    user = User.new(github_id:      auth['uid'],
+                    name:           auth['extra']['raw_info']['login'],
+                    access_token:   auth['credentials']['token'],
+                    approved_terms: false)
+    user.save
+    return user
+  end
+
+  # ユーザー更新
+  def update_user(user, auth)
+    # アクセストークン
+    user.access_token = auth['credentials']['token']
+    # 名前
+    user.name = auth['extra']['raw_info']['login']
+    # 最終ログイン時刻
+    user.last_login_at = Time.now
+    # 保存
+    user.save
   end
 end
