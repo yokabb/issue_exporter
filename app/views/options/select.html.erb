@@ -74,9 +74,9 @@
       <% @issues_items.each do |item| %>
         <label class="checkbox" style="display:block;">
           <% if @issues_items.labels.include?(item) %>
-            <input type="checkbox" name="labels_in_items[]" value="<%= item %>" checked="true"><span><%= item %></span>
+            <input type="checkbox" name="labels_in_items[]" value="<%= item %>"><span><%= item %></span>
           <% else %>
-            <input type="checkbox" name="items[]" value="<%= item %>" checked="true"><span><%= item %></span>
+            <input type="checkbox" name="items[]" value="<%= item %>"><span><%= item %></span>
           <% end %>
         </label>
       <% end %>
