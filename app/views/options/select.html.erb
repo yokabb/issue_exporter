@@ -2,8 +2,8 @@
 <form class="form-horizontal" name="select_form" action="<%= "/export/#{@user}/#{@repo}.csv"%>" method="get" onsubmit="return BeforeSubmission()">
   <% # ラベルカテゴリの設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Category of label</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Category of label</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class ="controls">
       <label class="radio">
         <input type="radio" name="category" value="none" checked="checked" onclick="ResetCategorize()">
@@ -39,8 +39,8 @@
   </div>
   <% # ラベル優先順位の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Priority of label</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Priority of label</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls">
       <table class="table-condensed">
         <thead>
@@ -71,8 +71,8 @@
   </div>
   <% # issue項目の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Issue items</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Issue items</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls" id="issue_items">
       <% @issues_items.each do |item| %>
         <label class="checkbox" style="display:block;">
@@ -87,8 +87,8 @@
   </div>
   <% # pull-request有無の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Reference pull request</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Reference pull request</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls">
       <table class="table-condensed">
         <tbody>
@@ -110,8 +110,8 @@
   </div>
   <% # open-issue有無/closed-issue有無の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Reference open issue / closed issue</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Reference open issue / closed issue</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls">
       <label class="radio">
         <input type="radio" name="issue_open_closed" value="open_closed" checked="checked">
@@ -129,8 +129,8 @@
   </div>
   <% # Issueの日付範囲の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Issue date range</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Issue date range</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls">
       <label class="radio">
         <input type="radio" name="issue_date_range" value="all" checked="checked" onclick="IssueDateRangeDisable()">
@@ -167,8 +167,8 @@
   </div>
   <% # 空欄の設定 %>
   <div class="control-group">
-    <label class="control-label" style="cursor:default;">Blank</label>
-    <i class="icon-info-sign" style="margin-left:4px; cursor:pointer;" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
+    <label class="control-label cursor-default">Blank</label>
+    <i class="icon-info-sign info-icon-style" onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')"></i>
     <div class="controls">
       <label class="radio">
         <input type="radio" name="blank" value="">
