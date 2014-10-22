@@ -1,0 +1,14 @@
+p.indent Issue Exporter のご利用には、「利用規約」への同意が必要です。
+p.indent 下記ご利用規約をよくお読みください。同意される方は「同意する」をクリックしてください。
+h2.center.margin-all 利用規約
+.row
+  .span10.offset1
+    pre
+      = render partial: 'termstext'
+form.form-horizontal(name="approval_form" action =root_path method="get")
+  .row
+    .span3.offset4
+      input.btn(type="submit" value="同意しない" style="pull-left;" onclick="document.getElementById('approve').value = false;")
+    div
+      input.btn(type="submit" value="同意する" style="pull-right;" onclick="document.getElementById('approve').value = true;")
+  input(type="hidden" name="approve" id="approve" value="")

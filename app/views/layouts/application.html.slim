@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title IssueExporter
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    header.navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          nav
+            ul.nav.pull-left
+              li = link_to "Issue Exporter", root_path
+            ul.nav.pull-right
+              - unless logged_in?
+                li = link_to "Sign in", '/auth/github'
+              - else
+                li = link_to "Sign out", '/logout'
+    .container
+      = yield
+    footer.footer
+      ul.nav.pull-left
+        li = link_to "Home", root_path
+      nav
+        ul.nav.pull-right
+          li = link_to "About"  , '/support_pages/about'
+          li = link_to "Privacy", '/support_pages/privacy'
+          li = link_to "Terms"  , '/support_pages/terms'
+          li = link_to "Contact", '/support_pages/contact'
