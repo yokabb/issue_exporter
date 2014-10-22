@@ -60,3 +60,5 @@ gem 'rspec',  '~> 3.0.0'
 
 gem 'rails-assets-bootstrap-daterangepicker'
 gem 'rails-assets-jquery', '1.11.1'
+
+gem 'slim'
