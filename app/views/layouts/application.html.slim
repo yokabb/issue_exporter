@@ -19,12 +19,12 @@ html
                 li = link_to "Sign out", '/logout'
     .container
       = yield
-    footer.footer
-      ul.nav.pull-left
-        li = link_to "Home", root_path
-      nav
-        ul.nav.pull-right
-          li = link_to "About"  , '/support_pages/about'
-          li = link_to "Privacy", '/support_pages/privacy'
-          li = link_to "Terms"  , '/support_pages/terms'
-          li = link_to "Contact", '/support_pages/contact'
+      footer.footer
+        ul.nav.pull-left
+          li = link_to "Home", root_path
+        nav
+          ul.nav.pull-right
+            li = link_to "About"  , '/support_pages/about'
+            li = link_to "Privacy", '/support_pages/privacy'
+            li = link_to "Terms"  , '/support_pages/terms'
+            li = link_to "Contact", '/support_pages/contact'
