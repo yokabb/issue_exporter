@@ -5,7 +5,7 @@ h2.center.margin-all 利用規約
   .span10.offset1
     pre
       = render partial: 'termstext'
-form.form-horizontal(name="approval_form" action =root_path method="get")
+form.form-horizontal(name="approval_form" action=root_path method="get")
   .row
     .span3.offset4
       input.btn(type="submit" value="同意しない" style="pull-left;" onclick="document.getElementById('approve').value = false;")

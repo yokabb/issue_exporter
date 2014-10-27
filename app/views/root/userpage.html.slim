@@ -7,60 +7,46 @@
     .span3.offset1
       table.table.table-condensed
         thead
-          tr
-            th
-              h3 User
+          tr: th: h3
+            | User
         tbody
-          /ユーザーを表示
-          tr
-            td
-              h4.indent
-                i.icon-user
-                  = (link_to @username, "/index/#{@username}")
+          / ユーザーを表示
+          tr: td: h4.indent
+            i.icon-user
+            = (link_to @username, "/index/#{@username}")
       table.table.table-condensed
         thead
-          tr
-            th
-              h3 Organizations
+          tr: th: h3
+            | Organizations
         tbody
-          /ユーザーの所属組織を表示
+          / ユーザーの所属組織を表示
           - @orgs.each do |org|
-            tr
-              td
-                h4.indent
-                  i.icon-home
-                    = (link_to org, "/index/#{org}")
+            tr: td: h4.indent
+              i.icon-home
+              = (link_to org, "/index/#{org}")
       table.table.table-condensed
         thead
-          tr
-            th
-              h3 Collaborators
+          tr: th: h3
+            | Collaborators
         tbody
-          /ユーザーの協力者を表示
+          / ユーザーの協力者を表示
           - @collaborators.each do |coll|
-            tr
-              td
-                h4.indent
-                  i.icon-user
-                    = (link_to coll, "/index/#{coll}")
+            tr: td: h4.indent
+              i.icon-user
+              = (link_to coll, "/index/#{coll}")
     .span8
       table.table.table-striped.table-condensed
         thead
-          tr
-            th
-              h3 Repositories
+          tr: th: h3
+            | Repositories
         tbody
-          /ユーザーのレポジトリを表示
-          /issueを持つもののみリンクを貼る
+          / ユーザーのレポジトリを表示
+          / issueを持つもののみリンクを貼る
           - @repos.each do |repo|
             - next unless repo.owner == params[:user]
             - if repo.has_issue
-                tr
-                  td
-                    h4.indent(style="color:gray")
-                      = link_to "#{repo.owner}/#{repo.name}", "/select/#{repo.owner}/#{repo.name}" 
+                tr: td: h4.indent(style="color:gray")
+                  = link_to "#{repo.owner}/#{repo.name}", "/select/#{repo.owner}/#{repo.name}" 
             - else
-                tr
-                  td
-                    h4.indent(style="color:gray")
-                      = ("#{repo.owner}/#{repo.name}")
+                tr: td: h4.indent(style="color:gray")
+                  = ("#{repo.owner}/#{repo.name}")

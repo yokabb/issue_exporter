@@ -2,11 +2,12 @@ h2.center.margin-all
   = @user
   |  / 
   span(style="color:maroon;") = @repo
-form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv" method="get" onsubmit="return BeforeSubmission()")
-  /ラベルカテゴリの設定
+form.form-horizontal(name="select_form" action="/export/#{@user}/#{@repo}.csv" method="get" onsubmit="return BeforeSubmission()")
+  / ラベルカテゴリの設定
   .control-group
     label.control-label.cursor-default Category of label
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       label.radio
         input(type="radio" name="category" value="none" checked="checked" onclick="ResetCategorize()")
@@ -30,10 +31,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
               input.btn.disabled(type="button" id="new_label_input_button" value="Categorize" onclick="Categorize()")
       h6
         ul.unstyled(id="generated_labels_output")
-  /ラベル優先順位の設定
+  / ラベル優先順位の設定
   .control-group
     label.control-label.cursor-default Priority of label
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       table.table-condensed
         thead
@@ -52,10 +54,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
                 option -
                 - @issues_items.labels.each do |label|
                   option = label
-  /issue項目の設定
+  / issue項目の設定
   .control-group
     label.control-label.cursor-default Issue items
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls(id="issue_items")
       - @issues_items.each do |item|
         label.checkbox(style="display:block;")
@@ -65,10 +68,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
           - else
             input(type="checkbox" name="items[]" value=(item))
               span = item
-  /pull-request有無の設定
+  / pull-request有無の設定
   .control-group
     label.control-label.cursor-default Reference pull request
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       table.table-condensed
         tbody
@@ -81,10 +85,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
               label.radio
                 input(type="radio" name="pull_request" value="off" checked="checked")
                 | OFF
-  /open-issue有無/closed-issue有無の設定
+  / open-issue有無/closed-issue有無の設定
   .control-group
     label.control-label.cursor-default Reference open issue / closed issue
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       label.radio
         input(type="radio" name="issue_open_closed" value="open_closed" checked="checked")
@@ -95,10 +100,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
       label.radio
         input(type="radio" name="issue_open_closed" value="closed")
         | Closed issue only
-  /Issueの日付範囲の設定
+  / Issueの日付範囲の設定
   .control-group
     label.control-label.cursor-default Issue date range
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       label.radio
         input(type="radio" name="issue_date_range" value="all" checked="checked" onclick="IssueDateRangeDisable()")
@@ -127,10 +133,11 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
               }
             );
           });
-  /空欄の設定
+  / 空欄の設定
   .control-group
     label.control-label.cursor-default Blank
-    i.icon-info-sign.info-icon-style(onclick="window.open('https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2')")
+    a(href="https://github.com/yokabb/issue_exporter/wiki#%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E7%94%BB%E9%9D%A2" target="_blank")
+      i.icon-info-sign.info-icon-style
     .controls
       label.radio
         input(type="radio" name="blank" value="")
@@ -138,7 +145,7 @@ form.form-horizontal(name="select_form" action = "/export/#{@user}/#{@repo}.csv"
       label.radio
         input(type="radio" name="blank" value="-" checked="checked")
         | Fill in the blank with hyphen("-")
-  /送信ボタン
+  / 送信ボタン
   input(type="hidden" name="generated_labels_textdata" id="generated_labels_textdata" value="")
   .control-group
     .controls
